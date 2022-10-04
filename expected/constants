@@ -1,0 +1,9 @@
+{
+  "descrition" : "masses in grammes, speed - sm/s, q = cm^3/2 * g^1/2 * s ^-1 ",
+  "m_e" : 1E-27,
+  "m_ion" : 1E-24,
+  "c_light" : 3E10,
+  "q_e" : 4.80320427E-10,
+  "ev_to_erg" : 1.602E-12,
+  "h_plank" : 6.62E-34
+}
