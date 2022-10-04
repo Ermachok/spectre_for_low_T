@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>864</width>
-    <height>527</height>
+    <width>1178</width>
+    <height>999</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -27,7 +27,7 @@ background-color: rgb(255, 243, 240);</string>
    <enum>Qt::ToolButtonIconOnly</enum>
   </property>
   <property name="tabShape">
-   <enum>QTabWidget::Triangular</enum>
+   <enum>QTabWidget::Rounded</enum>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="formLayoutWidget">
@@ -81,6 +81,9 @@ background-color: rgb(255, 243, 240);</string>
        <property name="maximum">
         <double>300.000000000000000</double>
        </property>
+       <property name="value">
+        <double>5.000000000000000</double>
+       </property>
       </widget>
      </item>
      <item row="0" column="0">
@@ -128,6 +131,9 @@ background-color: rgb(255, 243, 240);</string>
        <property name="maximum">
         <double>5000.000000000000000</double>
        </property>
+       <property name="value">
+        <double>100.000000000000000</double>
+       </property>
       </widget>
      </item>
      <item row="3" column="1">
@@ -152,6 +158,9 @@ background-color: rgb(255, 243, 240);</string>
        </property>
        <property name="maximum">
         <double>5000.000000000000000</double>
+       </property>
+       <property name="value">
+        <double>100.000000000000000</double>
        </property>
       </widget>
      </item>
@@ -204,6 +213,9 @@ background-color: rgb(255, 243, 240);</string>
        </property>
        <property name="maximum">
         <double>10.000000000000000</double>
+       </property>
+       <property name="value">
+        <double>2.000000000000000</double>
        </property>
       </widget>
      </item>
@@ -274,6 +286,9 @@ background-color: rgb(255, 243, 240);</string>
        <property name="maximum">
         <double>400.000000000000000</double>
        </property>
+       <property name="value">
+        <double>110.000000000000000</double>
+       </property>
       </widget>
      </item>
      <item row="1" column="0">
@@ -309,6 +324,12 @@ background-color: rgb(255, 243, 240);</string>
        <property name="maximum">
         <double>10.000000000000000</double>
        </property>
+       <property name="singleStep">
+        <double>0.200000000000000</double>
+       </property>
+       <property name="value">
+        <double>1.000000000000000</double>
+       </property>
       </widget>
      </item>
      <item row="1" column="1">
@@ -334,6 +355,9 @@ background-color: rgb(255, 243, 240);</string>
        <property name="maximum">
         <double>2000.000000000000000</double>
        </property>
+       <property name="value">
+        <double>1064.400000000000091</double>
+       </property>
       </widget>
      </item>
      <item row="2" column="0">
@@ -358,24 +382,11 @@ background-color: rgb(255, 243, 240);</string>
      </item>
     </layout>
    </widget>
-   <widget class="Line" name="line">
-    <property name="geometry">
-     <rect>
-      <x>350</x>
-      <y>40</y>
-      <width>16</width>
-      <height>211</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Vertical</enum>
-    </property>
-   </widget>
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>50</y>
+      <x>30</x>
+      <y>400</y>
       <width>262</width>
       <height>82</height>
      </rect>
@@ -406,6 +417,19 @@ background-color: rgb(255, 243, 240);</string>
        </property>
        <property name="maximum">
         <double>100.000000000000000</double>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Solpiter  (  1 / ( k *  D )  on laser wavelength )</string>
        </property>
       </widget>
      </item>
@@ -444,26 +468,13 @@ background-color: rgb(255, 243, 240);</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_6">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Solpiter</string>
-       </property>
-      </widget>
-     </item>
     </layout>
    </widget>
    <widget class="Line" name="line_2">
     <property name="geometry">
      <rect>
-      <x>7</x>
-      <y>250</y>
+      <x>10</x>
+      <y>230</y>
       <width>341</width>
       <height>20</height>
      </rect>
@@ -476,9 +487,9 @@ background-color: rgb(255, 243, 240);</string>
     <property name="geometry">
      <rect>
       <x>350</x>
-      <y>270</y>
-      <width>16</width>
-      <height>241</height>
+      <y>40</y>
+      <width>20</width>
+      <height>351</height>
      </rect>
     </property>
     <property name="orientation">
@@ -488,35 +499,13 @@ background-color: rgb(255, 243, 240);</string>
    <widget class="QWidget" name="gridLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>270</y>
-      <width>271</width>
+      <x>40</x>
+      <y>250</y>
+      <width>272</width>
       <height>87</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_4">
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_15">
-       <property name="font">
-        <font>
-         <weight>75</weight>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="text">
-        <string>Section calculation parameters </string>
-       </property>
-       <property name="scaledContents">
-        <bool>false</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="indent">
-        <number>0</number>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_18">
        <property name="text">
@@ -553,6 +542,9 @@ background-color: rgb(255, 243, 240);</string>
        <property name="maximum">
         <double>2000.000000000000000</double>
        </property>
+       <property name="value">
+        <double>1000.000000000000000</double>
+       </property>
       </widget>
      </item>
      <item row="2" column="0">
@@ -582,6 +574,9 @@ background-color: rgb(255, 243, 240);</string>
        <property name="maximum">
         <double>1000.000000000000000</double>
        </property>
+       <property name="value">
+        <double>200.000000000000000</double>
+       </property>
       </widget>
      </item>
      <item row="2" column="1">
@@ -604,6 +599,9 @@ background-color: rgb(255, 243, 240);</string>
        <property name="maximum">
         <double>2000.000000000000000</double>
        </property>
+       <property name="value">
+        <double>1070.000000000000000</double>
+       </property>
       </widget>
      </item>
      <item row="3" column="0">
@@ -616,13 +614,35 @@ background-color: rgb(255, 243, 240);</string>
        </property>
       </widget>
      </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_15">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Section calculation parameters </string>
+       </property>
+       <property name="scaledContents">
+        <bool>false</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="indent">
+        <number>0</number>
+       </property>
+      </widget>
+     </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="CalcSecButton">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>370</y>
+      <x>250</x>
+      <y>350</y>
       <width>89</width>
       <height>23</height>
      </rect>
@@ -632,6 +652,88 @@ background-color: rgb(255, 243, 240);</string>
     </property>
     <property name="text">
      <string>Calculate section</string>
+    </property>
+   </widget>
+   <widget class="QWidget" name="gridLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>40</y>
+      <width>621</width>
+      <height>128</height>
+     </rect>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_5">
+     <item row="3" column="0">
+      <widget class="QPushButton" name="FilterLoadpushButton_2">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(189, 255, 250);</string>
+       </property>
+       <property name="text">
+        <string>Show original data</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QPushButton" name="FilterLoadpushButton">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(189, 255, 250);</string>
+       </property>
+       <property name="text">
+        <string>Load filter data</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="FilterlineEdit">
+       <property name="text">
+        <string>D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected\\filters16_19_doc.csv</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_12">
+       <property name="text">
+        <string>Path to filter data file: </string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_11">
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>Filters data</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QPushButton" name="FilterLoadpushButton_3">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(189, 255, 250);</string>
+       </property>
+       <property name="text">
+        <string>Show in poly on wl_grid</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="Line" name="line_4">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>380</y>
+      <width>331</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
     </property>
    </widget>
   </widget>
