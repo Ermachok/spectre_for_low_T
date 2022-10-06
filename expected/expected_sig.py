@@ -102,7 +102,7 @@ def load_filter_data(filter_path: str):
     return filters_data_wl, filters_data_trans, len(filters_data_trans)
 
 
-def load_detector_data(detector_path: str):
+def load_detector_data(detector_path: str) -> (list, list):
     # реверс в конце функции - начальная характеристика дана с 1100nm -> 600nm
     with open(detector_path, 'r') as file:
         detector_file = file.readlines()
@@ -112,7 +112,7 @@ def load_detector_data(detector_path: str):
 
     for i in range(2, len(detector_file)):
         detector_wl.append(float(detector_file[i].split(',')[0]))
-        detector_phel.append(float(detector_file[i].split(',')[1]))
+        detector_phel.append(float(detector_file[i].split(',')[1])/100) #данные в файле - в процентах, поэтому /100 !!!
 
     print('Detector data loaded')
 
@@ -122,7 +122,7 @@ def load_detector_data(detector_path: str):
     return detector_wl, detector_phel
 
 
-def build_spec_channels(wl_grid: list, filters_wl: list, filters_trans: list):
+def build_spec_channels(wl_grid: list, filters_wl: list, filters_trans: list) -> list:
     # спектральная характеристика каналов на сетке по длине волны
     all_ch_trans = []
     all_ch_reflect = []
@@ -197,7 +197,6 @@ if __name__ == '__main__':
     laser_energy = 2  # J
     scattering_len = 17E-3  #m
     optic_trans = 0.2  #path to poly
-    detector_to_percents = 100
     T_i = 100  # ev
     laser_len = 1064.4  # nm
     theta_scat = 110
@@ -246,7 +245,7 @@ if __name__ == '__main__':
         #print(' %.4e ' % (section_Evans(0.3, 0.3, wl, 1064.4, 130, 1E21, zeff)))
 
     results = []
-    const = scattering_len * omega_scat * n_e * laser_energy * optic_trans * w_to_lambda / (detector_to_percents * ph_energy)
+    const = scattering_len * omega_scat * n_e * laser_energy * optic_trans * w_to_lambda / (ph_energy)
     const = const * power
 
     for channel in range(number_of_channels):

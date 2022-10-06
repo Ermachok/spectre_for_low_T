@@ -80,11 +80,30 @@ class InteractiveLegend(object):
         plt.show()
 
 
-def plot_orig_filters(f_data_wl: list ,f_data_trans: list, filter_num: int):
+def plot_orig_filters(f_data_wl: list, f_data_trans: list, filter_num: int):
 
     fig, ax = plt.subplots()
     for i in range(filter_num):
-        ax.plot(f_data_wl[i], f_data_trans[i], label=r"filter %i" %i)
+        ax.plot(f_data_wl[i], f_data_trans[i], label=r"filter %i" %(i+1))
+
+    interactive_legend.leg = interactive_legend()
+    plt.show()
+
+
+def plot_spec_ch(wl_grid: list, all_ch_trans: list,  filter_num: int):
+
+    fig, ax = plt.subplots()
+    for i in range(filter_num):
+        ax.plot(wl_grid, all_ch_trans[i], label=r"filter %i" % (i + 1))
+
+    interactive_legend.leg = interactive_legend()
+    plt.show()
+
+
+def plot_detector_data(detector_wl: list, detector_data: list):
+
+    fig, ax = plt.subplots()
+    ax.plot(detector_wl, detector_data, label=r"Detector data")
 
     interactive_legend.leg = interactive_legend()
     plt.show()

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1106</width>
-    <height>713</height>
+    <width>1123</width>
+    <height>697</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -126,10 +126,13 @@ background-color: rgb(255, 243, 240);</string>
         <string> eV</string>
        </property>
        <property name="decimals">
-        <number>2</number>
+        <number>3</number>
        </property>
        <property name="maximum">
         <double>5000.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>0.100000000000000</double>
        </property>
        <property name="value">
         <double>100.000000000000000</double>
@@ -413,7 +416,7 @@ background-color: rgb(255, 243, 240);</string>
         <string notr="true"> mm</string>
        </property>
        <property name="decimals">
-        <number>3</number>
+        <number>4</number>
        </property>
        <property name="maximum">
         <double>100.000000000000000</double>
@@ -543,7 +546,7 @@ background-color: rgb(255, 243, 240);</string>
         <double>2000.000000000000000</double>
        </property>
        <property name="value">
-        <double>1000.000000000000000</double>
+        <double>1030.000000000000000</double>
        </property>
       </widget>
      </item>
@@ -659,11 +662,67 @@ background-color: rgb(255, 243, 240);</string>
      <rect>
       <x>380</x>
       <y>40</y>
-      <width>621</width>
-      <height>128</height>
+      <width>671</width>
+      <height>321</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout_5">
+     <item row="11" column="0">
+      <widget class="QPushButton" name="FilterLoadpushButton_6">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(189, 255, 250);</string>
+       </property>
+       <property name="text">
+        <string>Build polychomator</string>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="1">
+      <widget class="QLabel" name="Detectordata_label">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 94, 105);</string>
+       </property>
+       <property name="text">
+        <string>no data </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="8" column="0">
+      <widget class="QPushButton" name="DetectorLoadButton">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(189, 255, 250);</string>
+       </property>
+       <property name="text">
+        <string>Load detector data</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLabel" name="SpecChdata_label">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 94, 105);</string>
+       </property>
+       <property name="text">
+        <string>no data </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QPushButton" name="BuildSpecChpushButton">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(189, 255, 250);</string>
+       </property>
+       <property name="text">
+        <string>Buid and show spectral channels</string>
+       </property>
+      </widget>
+     </item>
      <item row="3" column="0">
       <widget class="QPushButton" name="ShowOrigFiltersButton">
        <property name="styleSheet">
@@ -691,10 +750,33 @@ background-color: rgb(255, 243, 240);</string>
        </property>
       </widget>
      </item>
+     <item row="12" column="0">
+      <widget class="QPushButton" name="FilterLoadpushButton_7">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(189, 255, 250);</string>
+       </property>
+       <property name="text">
+        <string>Show poly data</string>
+       </property>
+      </widget>
+     </item>
      <item row="1" column="0">
       <widget class="QLabel" name="label_12">
        <property name="text">
         <string>Path to filter data file: </string>
+       </property>
+      </widget>
+     </item>
+     <item row="12" column="1">
+      <widget class="QLabel" name="FilterPolydata_label_5">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 94, 105);</string>
+       </property>
+       <property name="text">
+        <string>no data </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -711,15 +793,93 @@ background-color: rgb(255, 243, 240);</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
-      <widget class="QPushButton" name="FilterLoadpushButton_3">
+     <item row="11" column="1">
+      <widget class="QLabel" name="FilterPolydata_label_4">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 94, 105);</string>
+       </property>
+       <property name="text">
+        <string>no data </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="1">
+      <widget class="QLabel" name="DetectorShowData_label">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 94, 105);</string>
+       </property>
+       <property name="text">
+        <string>no data </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0">
+      <widget class="QPushButton" name="DetectorShowButton">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(189, 255, 250);</string>
        </property>
        <property name="text">
-        <string>Show in poly on wl_grid</string>
+        <string>Show detector data</string>
        </property>
       </widget>
+     </item>
+     <item row="10" column="0">
+      <spacer name="verticalSpacer_4">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="10" column="1">
+      <spacer name="verticalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="5" column="1">
+      <spacer name="verticalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="5" column="0">
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
      </item>
      <item row="2" column="1">
       <widget class="QLabel" name="filter_status_label">
@@ -744,6 +904,20 @@ background-color: rgb(255, 243, 240);</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="label_13">
+       <property name="text">
+        <string>Path to detector data file: </string>
+       </property>
+      </widget>
+     </item>
+     <item row="6" column="1">
+      <widget class="QLineEdit" name="DetectorPathlineEdit">
+       <property name="text">
+        <string>D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected\S15995_qe.csv</string>
        </property>
       </widget>
      </item>
