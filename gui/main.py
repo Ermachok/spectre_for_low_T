@@ -2,6 +2,9 @@ import sys
 import json
 import math
 from PyQt5 import QtWidgets
+import os.path
+import filter_graph
+
 
 import designe_1
 
@@ -21,6 +24,13 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
         self.LWSpinBox.valueChanged['double'].connect(self.Debay_solpet)
         self.CalcSecButton.clicked.connect(self.Section_calculation)
         self.FilterLoadpushButton.clicked.connect(self.Load_filter_data)
+        self.ShowOrigFiltersButton.clicked.connect(self.Show_orig_filters)
+
+        self.f_data_wl = None
+        self.f_data_trans = None
+        self.num_of_filters = None
+
+
 
     def Debay_solpet(self):
         temp_elec_ev =self.TeSpinBox.value()
@@ -54,7 +64,12 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
         # возвращает 2 списка списков. 1 - длины волн, 2 - пропускание.
         #требует на вход файл, в котором каждому фильтру соответствует 2 столбца - длина волны и пропускание. 3 фильтра - 3 пары(6 столбцов)
         filter_path = self.FilterlineEdit.text()
-        print(filter_path)
+
+        if not os.path.exists(filter_path):
+            self.filter_status_label.setText('File doest not found ')
+            self.filter_status_label.setStyleSheet("background-color:   rgb(255, 64, 99);")
+            return -1
+
         with open(filter_path, 'r') as file:
             filters_data = file.readlines()
 
@@ -86,15 +101,34 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
             filters_data_wl.append(temp_wl)
             filters_data_trans.append(temp_trans)
 
-        print('Filters data loaded, number of filters:', len(filters_data_trans))
+        self.filter_status_label.setText('Filters data loaded, number of filters:%d' %len(filters_data_trans))
+        self.filter_status_label.setStyleSheet("background-color: rgb(114, 255, 142);")
 
-        return filters_data_wl, filters_data_trans, len(filters_data_trans)
+        self.Filter_Origdata_label.setText('Ready')
+        self.Filter_Origdata_label.setStyleSheet("background-color: rgb(70, 200, 100);")
+
+        self.f_data_wl = filters_data_wl
+        self.f_data_trans = filters_data_trans
+        self.num_of_filters = len(filters_data_trans)
+
+        return 1
+
+    def Show_orig_filters(self):
+        if self.num_of_filters is None:
+            self.Filter_Origdata_label.setStyleSheet("background-color: rgb(255, 94, 105);")
+            return 0
+        else:
+            filter_graph.plot_orig_filters(self.f_data_wl, self.f_data_trans, self.num_of_filters)
+            self.Filter_Origdata_label.setStyleSheet("background-color:  rgb(88, 255, 51);")
+            return 1
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
     window = App()
     window.show()
     app.exec_()
+
 
 if __name__ == '__main__':
     main()

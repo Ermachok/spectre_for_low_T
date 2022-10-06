@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1178</width>
-    <height>999</height>
+    <width>1106</width>
+    <height>713</height>
    </rect>
   </property>
   <property name="mouseTracking">
@@ -665,7 +665,7 @@ background-color: rgb(255, 243, 240);</string>
     </property>
     <layout class="QGridLayout" name="gridLayout_5">
      <item row="3" column="0">
-      <widget class="QPushButton" name="FilterLoadpushButton_2">
+      <widget class="QPushButton" name="ShowOrigFiltersButton">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(189, 255, 250);</string>
        </property>
@@ -718,6 +718,32 @@ background-color: rgb(255, 243, 240);</string>
        </property>
        <property name="text">
         <string>Show in poly on wl_grid</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLabel" name="filter_status_label">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 94, 105);</string>
+       </property>
+       <property name="text">
+        <string>no data </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLabel" name="Filter_Origdata_label">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(255, 94, 105);</string>
+       </property>
+       <property name="text">
+        <string>no data </string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>

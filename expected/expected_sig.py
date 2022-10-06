@@ -197,7 +197,7 @@ if __name__ == '__main__':
     laser_energy = 2  # J
     scattering_len = 17E-3  #m
     optic_trans = 0.2  #path to poly
-    detector_gain = 100
+    detector_to_percents = 100
     T_i = 100  # ev
     laser_len = 1064.4  # nm
     theta_scat = 110
@@ -246,7 +246,7 @@ if __name__ == '__main__':
         #print(' %.4e ' % (section_Evans(0.3, 0.3, wl, 1064.4, 130, 1E21, zeff)))
 
     results = []
-    const = scattering_len * omega_scat * n_e * laser_energy * optic_trans * w_to_lambda / (detector_gain * ph_energy)
+    const = scattering_len * omega_scat * n_e * laser_energy * optic_trans * w_to_lambda / (detector_to_percents * ph_energy)
     const = const * power
 
     for channel in range(number_of_channels):
