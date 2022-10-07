@@ -4,14 +4,23 @@ import math
 from PyQt5 import QtWidgets
 import os.path
 import graphs
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT as NavigationToolbar
+from matplotlib.figure import Figure
+import designe_1
 
 sys.path.insert(1,'D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected')
-
 import expected_sig
-import designe_1
 
 with open('D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected\constants', 'r') as file:
     all_const = json.load(file)
+
+
+class MplCanvas(FigureCanvasQTAgg):
+
+    def __init__(self, parent=None, width=5, height=4, dpi=100):
+        fig = Figure(figsize=(width, height), dpi=dpi)
+        self.axes = fig.add_subplot(111)
+        super(MplCanvas, self).__init__(fig)
 
 
 class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
@@ -27,7 +36,7 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
         self.CalcSecButton.clicked.connect(self.Section_calculation)
         self.FilterLoadpushButton.clicked.connect(self.Load_filter_data)
         self.ShowOrigFiltersButton.clicked.connect(self.Show_orig_filters)
-        self.BuildSpecChpushButton.clicked.connect(self.Build_show_spec_ch)
+        self.BuildSpecChpushButton.clicked.connect(self.Build_Show_spec_ch)
         self.DetectorLoadButton.clicked.connect(self.Load_detector_data)
         self.DetectorShowButton.clicked.connect(self.Show_detector_data)
 
@@ -39,6 +48,7 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
 
         self.detector_wl = None
         self.detector_data = None
+
 
     def Debay_solpet(self):
         temp_elec_ev =self.TeSpinBox.value()
@@ -106,13 +116,17 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
             self.Filter_Origdata_label.setStyleSheet("background-color: rgb(255, 94, 105);")
             return 0
         else:
-            graphs.plot_orig_filters(self.f_data_wl, self.f_data_trans, self.num_of_filters)
             self.Filter_Origdata_label.setStyleSheet("background-color:  rgb(88, 255, 51);")
             self.Filter_Origdata_label.setText('Was watched')
 
+            layout = QtWidgets.QVBoxLayout()
+            layout.addWidget(graphs.plot_orig_filters(self.f_data_wl, self.f_data_trans, self.num_of_filters))
+
+            self.widget_for_plot.setLayout(layout)
+            layout.deleteLater()
             return 1
 
-    def Build_show_spec_ch(self):
+    def Build_Show_spec_ch(self):
         if self.num_of_filters is None:
             self.SpecChdata_label.setStyleSheet("background-color: rgb(255, 94, 105);")
             return 0
@@ -125,9 +139,13 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
 
             self.spec_ch_data = expected_sig.build_spec_channels(wl_grid, self.f_data_wl, self.f_data_trans)
 
-            graphs.plot_spec_ch(wl_grid, self.spec_ch_data, self.num_of_filters)
             self.SpecChdata_label.setStyleSheet("background-color:  rgb(88, 255, 51);")
             self.SpecChdata_label.setText('Was watched')
+
+            layout = QtWidgets.QVBoxLayout()
+            layout.addWidget(graphs.plot_spec_ch(wl_grid, self.spec_ch_data, self.num_of_filters))
+            self.widget_for_plot.setLayout(layout)
+            layout.deleteLater()
 
     def Load_detector_data(self):
         detector_path = self.DetectorPathlineEdit.text()
@@ -137,6 +155,9 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
 
             self.DetectorShowData_label.setText('no data')
             self.DetectorShowData_label.setStyleSheet("background-color:  rgb(255, 64, 99);")
+
+            self.detector_wl = None
+            self.detector_data = None
 
             return 0
         else:
@@ -151,10 +172,13 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
         if self.detector_wl is None:
             return 0
         else:
-            graphs.plot_detector_data(self.detector_wl,  self.detector_data)
             self.DetectorShowData_label.setStyleSheet("background-color:  rgb(88, 255, 51);")
             self.DetectorShowData_label.setText('Was watched')
 
+            layout = QtWidgets.QVBoxLayout()
+            layout.addWidget(graphs.plot_detector_data(self.detector_wl,  self.detector_data))
+            self.widget_for_plot.setLayout(layout)
+            layout.deleteLater()
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
