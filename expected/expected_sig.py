@@ -22,6 +22,52 @@ def Gamma(alpha: float, x: float) -> float:
     return gamma
 
 
+def section_Evans_v1(temp_elec_ev: float, temp_ions_ev: float, wavelen_scat_nm: float, wavelen_incident_nm: float,
+                  theta_deg: float, n_e_m: float, z_eff: float) -> float:
+    #                                               !!!!!CГС!!!!
+    # спектр взят с Пятницкого стр 165. (6.2) - у него из Эванса
+
+    #  отличается от section_Evans только тем, что сечение домножается на частоту, на которой ищется и открывает файл с
+    #  константами сама
+    with open('D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected\constants', 'r') as file:
+        all_const = json.load(file)
+
+    n_e_cm = n_e_m / 1E6
+    wavelen_scat = wavelen_scat_nm * 1E-7  # centimeters
+    wavelen_incident = wavelen_incident_nm * 1E-7  # centimeters
+
+    omega = 2 * math.pi * all_const['c_light'] / wavelen_scat
+    omega_0 = 2 * math.pi * all_const['c_light'] / wavelen_incident
+    # print('omega %.4e' %omega)
+
+    theta_rad = theta_deg * math.pi / 180
+
+    # Solpeter alpha = 1/(K * Debay), k =  2 * omega * sin(a/2) (пятницкий, стр 54 (2.60) ) , omega = 2 * pi * c / nu
+
+    debay = (temp_elec_ev * all_const['ev_to_erg'] / (4 * math.pi * n_e_cm * all_const['q_e'] ** 2)) ** (1 / 2)  # centimeters
+    # print('debay, cm', debay)
+
+    alpha = all_const['c_light'] / (2 * omega * math.sin(theta_rad / 2) * debay)
+    #print('solpeter', alpha)
+
+    beta_squared = z_eff * (temp_elec_ev / temp_ions_ev) * (alpha ** 2 / (1 + alpha ** 2))
+
+    beta = beta_squared ** (1 / 2)
+
+    omega_e = 2 * omega * (2 * temp_elec_ev * all_const['ev_to_erg'] / all_const['m_e']) ** (1 / 2) * math.sin(theta_rad / 2) / all_const['c_light']
+    omega_i = 2 * omega * (2 * temp_ions_ev * all_const['ev_to_erg'] / all_const['m_ion']) ** (1 / 2) * math.sin(theta_rad / 2) / all_const['c_light']
+
+    Omega = omega - omega_0
+
+    x = Omega / omega_e
+    y = Omega / omega_i
+
+    const = all_const['q_e'] ** 4 / (all_const['m_e'] ** 2 * all_const['c_light'] ** 4 * math.pi ** (1 / 2)) * 1E-4  # 1E-4 - to meters^2
+    sigma = const * (Gamma(alpha, x) / omega_e + z_eff * (alpha ** 2 / (1 + alpha ** 2)) ** 2 * Gamma(beta,y) / omega_i) * omega
+
+    return sigma
+
+
 def section_Evans(temp_elec_ev: float, temp_ions_ev: float, wavelen_scat_nm: float, wavelen_incident_nm: float,
                   theta_deg: float, n_e_m: float, z_eff: float) -> float:
     #                                               !!!!!CГС!!!!
@@ -57,15 +103,18 @@ def section_Evans(temp_elec_ev: float, temp_ions_ev: float, wavelen_scat_nm: flo
     x = Omega / omega_e
     y = Omega / omega_i
 
-    const = all_const['q_e'] ** 4 / (all_const['m_e'] ** 2 * all_const['c_light'] ** 4 * math.pi ** (1 / 2)) * 1E-4  # 1E-4 - to meters^2
-    sigma = const * (Gamma(alpha, x) / omega_e + z_eff * (alpha ** 2 / (1 + alpha ** 2)) ** 2 * Gamma(beta,y) / omega_i)
+    const = all_const['q_e'] ** 4 / (all_const['m_e'] ** 2 * all_const['c_light'] ** 4 * math.pi ** (1 / 2)) * 1E-4  #1E-4 - to meters^2
+    sigma = const * (Gamma(alpha, x) / omega_e + z_eff * (alpha ** 2 / (1 + alpha ** 2)) ** 2 * Gamma(beta, y) / omega_i)
 
-    return sigma
+    return sigma #m^2/ ( st * s)
 
 
 def load_filter_data(filter_path: str):
     # возвращает 2 списка списков. 1 - длины волн, 2 - пропускание.
-    #требует на вход файл, в котором каждому фильтру соответствует 2 столбца - длина волны и пропускание. 3 фильтра - 3 пары(6 столбцов)
+    # требует на вход файл, в котором каждому фильтру соответствует 2 столбца - длина волны и пропускание.
+    # 3 фильтра - 3 пары(6 столбцов)
+
+
     with open(filter_path, 'r') as file:
         filters_data = file.readlines()
 
@@ -112,7 +161,7 @@ def load_detector_data(detector_path: str) -> (list, list):
 
     for i in range(2, len(detector_file)):
         detector_wl.append(float(detector_file[i].split(',')[0]))
-        detector_phel.append(float(detector_file[i].split(',')[1])/100) #данные в файле - в процентах, поэтому /100 !!!
+        detector_phel.append(float(detector_file[i].split(',')[1])/100)   # данные в файле - в процентах, поэтому /100 !
 
     print('Detector data loaded')
 
@@ -175,7 +224,10 @@ def build_spec_channels(wl_grid: list, filters_wl: list, filters_trans: list) ->
 
 
 def build_poly(wl_grid: list, all_ch_trans: list, detector_wl: list, detector_phel: list):
+    # multiply spectral data by approx on grid detector data
+    channels = []
     for ch_num in range(len(all_ch_trans)):
+        temp_ch = []
         for wl_ind in range(len(wl_grid)):
             filter_ind = 0
             while wl_grid[wl_ind] > detector_wl[filter_ind]:
@@ -183,10 +235,11 @@ def build_poly(wl_grid: list, all_ch_trans: list, detector_wl: list, detector_ph
             detector = detector_phel[filter_ind] + (detector_phel[filter_ind+1] - detector_phel[filter_ind])/(detector_wl[filter_ind+1]-detector_wl[filter_ind] ) \
                        * (wl_grid[wl_ind] - detector_wl[filter_ind])
             # линейная интерполяция
-            all_ch_trans[ch_num][wl_ind] = all_ch_trans[ch_num][wl_ind] * detector * 0.97**ch_num
-            #all_ch_trans[ch_num][wl_ind] = all_ch_trans[ch_num][wl_ind] * 0.97**ch_num  # пришло
+            temp_ch.append(all_ch_trans[ch_num][wl_ind] * detector * 0.97**ch_num)
+            #all_ch_trans[ch_num][wl_ind] = all_ch_trans[ch_num][wl_ind] * detector * 0.97**ch_num
+        channels.append(temp_ch)
 
-    return
+    return channels
 
 
 if __name__ == '__main__':
@@ -217,10 +270,11 @@ if __name__ == '__main__':
 
     #filters_data_wl, filters_data_trans, number_of_channels = load_filter_data('D:\Ioffe\\filters +0.4;+0.8/16_and_19 filters.csv')
     #filters_data_wl, filters_data_trans, number_of_channels = load_filter_data('D:\Ioffe\\filters +0.4;+0.8/16_19_measure.csv')
-    #print(number_of_channels)
     #filters_data_wl, filters_data_trans, number_of_channels = load_filter_data('D:/Ioffe/divertor_thomson/annex_8/annex_8_filters.csv')
-    filters_data_wl, filters_data_trans, number_of_channels = load_filter_data('D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected\\filters16_19_doc.csv')
+    #filters_data_wl, filters_data_trans, number_of_channels = load_filter_data('D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected\\filters16_19_doc.csv')
+    filters_data_wl, filters_data_trans, number_of_channels = load_filter_data('D:\Ioffe\divertor_thomson\divertor_poly\\filters_4_divPoly.csv')
 
+    print('phuk')
     all_ch_trans = build_spec_channels(wl_grid_nm, filters_data_wl, filters_data_trans)
     build_poly(wl_grid_nm, all_ch_trans, detector_wl, detector_data)
 
@@ -253,7 +307,7 @@ if __name__ == '__main__':
         for T in T_e:
             integral = 0
             for i in range(len(wl_grid_nm)):
-                sigma = section_Evans(T, T, wl_grid_nm[i], laser_len, theta_scat, n_e, zeff)  #m^2/st
+                sigma = section_Evans(T, T, wl_grid_nm[i], laser_len, theta_scat, n_e, zeff)  #m^2/ ( st * s)
                 integral = integral + sigma * all_ch_trans[channel][i] / (wl_grid_nm[i]**2)
             ch_phel.append(integral * const * wl_step)
         results.append(ch_phel)

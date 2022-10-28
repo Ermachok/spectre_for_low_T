@@ -4,23 +4,14 @@ import math
 from PyQt5 import QtWidgets
 import os.path
 import graphs
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT as NavigationToolbar
-from matplotlib.figure import Figure
 import designe_1
-
-sys.path.insert(1,'D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected')
-import expected_sig
+from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 
 with open('D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected\constants', 'r') as file:
     all_const = json.load(file)
 
-
-class MplCanvas(FigureCanvasQTAgg):
-
-    def __init__(self, parent=None, width=5, height=4, dpi=100):
-        fig = Figure(figsize=(width, height), dpi=dpi)
-        self.axes = fig.add_subplot(111)
-        super(MplCanvas, self).__init__(fig)
+sys.path.insert(1,'D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected')
+import expected_sig
 
 
 class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
@@ -28,6 +19,8 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
 
         super().__init__()
         self.setupUi(self)
+
+        self.Debay_solpet()
 
         self.ConcSpinBox.valueChanged['double'].connect(self.Debay_solpet)
         self.TeSpinBox.valueChanged['double'].connect(self.Debay_solpet)
@@ -39,6 +32,8 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
         self.BuildSpecChpushButton.clicked.connect(self.Build_Show_spec_ch)
         self.DetectorLoadButton.clicked.connect(self.Load_detector_data)
         self.DetectorShowButton.clicked.connect(self.Show_detector_data)
+        self.PolyBuildpushButton.clicked.connect(self.Build_Show_poly)
+        self.CalcSecButton.clicked.connect(self.Section_calculation)
 
         self.f_data_wl = None
         self.f_data_trans = None
@@ -49,10 +44,14 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
         self.detector_wl = None
         self.detector_data = None
 
+        self.poly = None
+
+        self.poly_ind = [False, False]
+
 
     def Debay_solpet(self):
-        temp_elec_ev =self.TeSpinBox.value()
-        n_e_m = self.ConcSpinBox.value() * 1E19
+        temp_elec_ev = self.TeSpinBox.value()
+        n_e_m = self.ConcSpinBox.value() * 1E20
 
         theta_rad = self.ThetaSpinBox.value() * math.pi / 180
         n_e_cm = n_e_m * 1E-6
@@ -72,11 +71,36 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
             return 0
 
     def Section_calculation(self):
+        section = []
+
+        temp_elec_ev = self.TeSpinBox.value()
+        temp_ion_ev = self.TionSpinBox.value()
+        n_e_m = self.ConcSpinBox.value() * 1E20
+
+        theta_deg = self.ThetaSpinBox.value()
+        solid_angle = self.OmegaSpinBox.value()
+        z_eff = self.ZeffSpinBox.value()
+
+        wl_laser = self.LWSpinBox.value()
+
         wl_start = self.wlStartSpinBox.value()
         num_of_steps = int(self.WlStepsSpinBox.value())
-        wl_step = (self.wlEndSpinBox.value()- wl_start) / num_of_steps
+        wl_step = (self.wlEndSpinBox.value() - wl_start) / num_of_steps
 
         wl_grid = [wl_start + wl_step * i for i in range(num_of_steps)]
+
+
+        for wl in wl_grid:
+            scat_section = expected_sig.section_Evans_v1(temp_elec_ev, temp_ion_ev, wl, wl_laser, theta_deg, n_e_m, z_eff)
+            section.append(scat_section * solid_angle)
+
+        pl = graphs.plot_section(wl_grid, section)
+        toolbar = NavigationToolbar(pl, self)
+        layout = QtWidgets.QVBoxLayout()
+        layout.addWidget(toolbar)
+        layout.addWidget(pl)
+        self.widget_for_plot.setLayout(layout)
+        layout.deleteLater()
 
     def Load_filter_data(self):
 
@@ -96,11 +120,15 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
             self.SpecChdata_label.setText('no data')
             self.SpecChdata_label.setStyleSheet("background-color:   rgb(255, 64, 99);")
 
+            self.poly_ind[1] = False
+            self.PolyData_label.setStyleSheet("background-color:   rgb(255, 64, 99);")
+            self.PolyData_label.setText('no data')
+
             return 0
 
         self.f_data_wl, self.f_data_trans, self.num_of_filters = expected_sig.load_filter_data(filter_path)
 
-        self.filter_status_label.setText('Filters data was loaded, number of filters:%d' %self.num_of_filters)
+        self.filter_status_label.setText('Filters data was loaded, number of filters:%d' % self.num_of_filters)
         self.filter_status_label.setStyleSheet("background-color: rgb(114, 255, 142);")
 
         self.Filter_Origdata_label.setText('Ready')
@@ -108,6 +136,12 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
 
         self.SpecChdata_label.setText('Ready')
         self.SpecChdata_label.setStyleSheet("background-color: rgb(70, 200, 100);")
+
+        self.poly_ind[1] = True
+
+        if self.poly_ind[0] and self.poly_ind[1]:
+            self.PolyData_label.setText('Ready')
+            self.PolyData_label.setStyleSheet("background-color: rgb(70, 200, 100);")
 
         return 1
 
@@ -118,9 +152,12 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
         else:
             self.Filter_Origdata_label.setStyleSheet("background-color:  rgb(88, 255, 51);")
             self.Filter_Origdata_label.setText('Was watched')
+            pl = graphs.plot_orig_filters(self.f_data_wl, self.f_data_trans, self.num_of_filters)
+            toolbar = NavigationToolbar(pl, self)
 
             layout = QtWidgets.QVBoxLayout()
-            layout.addWidget(graphs.plot_orig_filters(self.f_data_wl, self.f_data_trans, self.num_of_filters))
+            layout.addWidget(toolbar)
+            layout.addWidget(pl)
 
             self.widget_for_plot.setLayout(layout)
             layout.deleteLater()
@@ -130,7 +167,9 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
         if self.num_of_filters is None:
             self.SpecChdata_label.setStyleSheet("background-color: rgb(255, 94, 105);")
             return 0
+
         else:
+
             wl_start = self.wlStartSpinBox.value()
             num_of_steps = int(self.WlStepsSpinBox.value())
             wl_step = (self.wlEndSpinBox.value() - wl_start) / num_of_steps
@@ -139,15 +178,28 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
 
             self.spec_ch_data = expected_sig.build_spec_channels(wl_grid, self.f_data_wl, self.f_data_trans)
 
-            self.SpecChdata_label.setStyleSheet("background-color:  rgb(88, 255, 51);")
-            self.SpecChdata_label.setText('Was watched')
 
             layout = QtWidgets.QVBoxLayout()
-            layout.addWidget(graphs.plot_spec_ch(wl_grid, self.spec_ch_data, self.num_of_filters))
+            pl = graphs.plot_spec_ch(wl_grid, self.spec_ch_data, self.num_of_filters)
+            toolbar = NavigationToolbar(pl, self)
+            layout.addWidget(toolbar)
+            layout.addWidget(pl)
+
+
             self.widget_for_plot.setLayout(layout)
             layout.deleteLater()
 
+            self.poly_ind[0] = True
+
+            if self.poly_ind[0] and self.poly_ind[1]:
+                self.PolyData_label.setText('Ready')
+                self.PolyData_label.setStyleSheet("background-color: rgb(70, 200, 100);")
+
+            self.SpecChdata_label.setStyleSheet("background-color:  rgb(88, 255, 51);")
+            self.SpecChdata_label.setText('Was watched')
+
     def Load_detector_data(self):
+
         detector_path = self.DetectorPathlineEdit.text()
         if not os.path.exists(detector_path):
             self.Detectordata_label.setText('File was not found')
@@ -175,10 +227,38 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
             self.DetectorShowData_label.setStyleSheet("background-color:  rgb(88, 255, 51);")
             self.DetectorShowData_label.setText('Was watched')
 
+            pl = graphs.plot_detector_data(self.detector_wl,  self.detector_data)
+            toolbar = NavigationToolbar(pl, self)
             layout = QtWidgets.QVBoxLayout()
-            layout.addWidget(graphs.plot_detector_data(self.detector_wl,  self.detector_data))
+            layout.addWidget(toolbar)
+            layout.addWidget(pl)
             self.widget_for_plot.setLayout(layout)
             layout.deleteLater()
+
+    def Build_Show_poly(self):
+        if self.spec_ch_data is None or self.detector_data is None:
+            return 0
+        else:
+            wl_start = self.wlStartSpinBox.value()
+            num_of_steps = int(self.WlStepsSpinBox.value())
+            wl_step = (self.wlEndSpinBox.value() - wl_start) / num_of_steps
+
+            wl_grid = [wl_start + wl_step * i for i in range(num_of_steps)]
+
+            channels = expected_sig.build_poly(wl_grid, self.spec_ch_data, self.detector_wl, self.detector_data)
+
+            layout = QtWidgets.QVBoxLayout()
+            pl = graphs.plot_poly_data(wl_grid, channels)
+            toolbar = NavigationToolbar(pl, self)
+            layout.addWidget(toolbar)
+            layout.addWidget(pl)
+
+            self.widget_for_plot.setLayout(layout)
+            layout.deleteLater()
+
+            self.PolyData_label.setText('Was watched')
+            self.PolyData_label.setStyleSheet("background-color:  rgb(88, 255, 51);")
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
