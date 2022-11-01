@@ -34,17 +34,17 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
         self.DetectorShowButton.clicked.connect(self.Show_detector_data)
         self.PolyBuildpushButton.clicked.connect(self.Build_Show_poly)
         self.CalcSecButton.clicked.connect(self.Section_calculation)
+        self.PhElcalcpushButton.clicked.connect(self.Calculate_phel)
 
         self.f_data_wl = None
         self.f_data_trans = None
         self.num_of_filters = None
 
         self.spec_ch_data = None
+        self.poly_channels = None
 
         self.detector_wl = None
         self.detector_data = None
-
-        self.poly = None
 
         self.poly_ind = [False, False, False]
 
@@ -90,11 +90,9 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
 
         ph_energy = all_const['h_plank'] * all_const['c_light'] * 1E-2 / (wl_laser * 1E-9)
         w_to_lambda = 2 * math.pi * all_const['c_light'] * 1E-2  # /lambda in integral
-        power = 1E9  # 1E-9 from wl_step and (1E-18)^(-1) from lambda^-2
-
 
         self.const = scattering_len * solid_angle * n_e_m * laser_energy * optic_trans * w_to_lambda / ph_energy
-        self.const = self.const * 1E9
+        self.const = self.const * 1E9  # 1E-9 from wl_step and (1E-18)^(-1) from lambda^-2
 
         wl_start = self.wlStartSpinBox.value()
         num_of_steps = int(self.WlStepsSpinBox.value())
@@ -104,7 +102,7 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
 
 
         for wl in wl_grid:
-            scat_section = expected_sig.section_Evans_v1(temp_elec_ev, temp_ion_ev, wl, wl_laser, theta_deg, n_e_m, z_eff)
+            scat_section = expected_sig.section_Evans_for_section_plot(temp_elec_ev, temp_ion_ev, wl, wl_laser, theta_deg, n_e_m, z_eff)
             self.section.append(scat_section * solid_angle)
 
         pl = graphs.plot_section(wl_grid, self.section, wl_laser)
@@ -204,7 +202,7 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
 
             self.poly_ind[1] = True
 
-            if self.poly_ind[0] and self.poly_ind[1]:
+            if self.poly_ind[0] and self.poly_ind[1] and self.poly_ind[2]:
                 self.PolyData_label.setText('Ready')
                 self.PolyData_label.setStyleSheet("background-color: rgb(70, 200, 100);")
 
@@ -257,6 +255,7 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
 
     def Build_Show_poly(self):
         if self.spec_ch_data is None or self.detector_data is None:
+            self.PolyData_label.setText('Build spectral channels and load detector data first')
             return 0
         else:
             wl_laser = self.LWSpinBox.value()
@@ -267,10 +266,10 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
 
             wl_grid = [wl_start + wl_step * i for i in range(num_of_steps)]
 
-            channels = expected_sig.build_poly(wl_grid, self.spec_ch_data, self.detector_wl, self.detector_data)
+            self.poly_channels = expected_sig.build_poly(wl_grid, self.spec_ch_data, self.detector_wl, self.detector_data)
 
             layout = QtWidgets.QVBoxLayout()
-            pl = graphs.plot_poly_data(wl_grid, channels, wl_laser)
+            pl = graphs.plot_poly_data(wl_grid, self.poly_channels, wl_laser)
             toolbar = NavigationToolbar(pl, self)
             layout.addWidget(toolbar)
             layout.addWidget(pl)
@@ -281,32 +280,71 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
             self.PolyData_label.setText('Was watched')
             self.PolyData_label.setStyleSheet("background-color:  rgb(88, 255, 51);")
 
+            self.PhEldata_label.setText('Ready')
+            self.PhEldata_label.setStyleSheet("background-color: rgb(70, 200, 100);")
+
     def Calculate_phel(self):
+        if self.poly_channels is None:
+            self.PhEldata_label.setText('Build poly first')
+            return 0
+        else:
+            n_e_m = self.ConcSpinBox.value() * 1E20
 
-        wl_start = self.wlStartSpinBox.value()
-        num_of_steps = int(self.WlStepsSpinBox.value())
-        wl_step = (self.wlEndSpinBox.value() - wl_start) / num_of_steps
+            theta_deg = self.ThetaSpinBox.value()
+            solid_angle = self.OmegaSpinBox.value()
+            z_eff = self.ZeffSpinBox.value()
+            scattering_len = self.ScatLenSpinBox.value()
 
-        wl_grid = [wl_start + wl_step * i for i in range(num_of_steps)]
+            laser_energy = self.LEnSpinBox.value()
+            wl_laser = self.LWSpinBox.value()
+            optic_trans = self.OpticTranslabel.value()
 
-        Te_start = self.wlStartSpinBox.value()
-        Te_num_of_steps = int(self.WlStepsSpinBox.value())
-        Te_step = (self.wlEndSpinBox.value() - wl_start) / num_of_steps
+            ph_energy = all_const['h_plank'] * all_const['c_light'] * 1E-2 / (wl_laser * 1E-9)
+            w_to_lambda = 2 * math.pi * all_const['c_light'] * 1E-2  # /lambda in integral
 
-        Te_grid = [Te_start + Te_step * i for i in range(Te_num_of_steps)]
+            self.const = scattering_len * solid_angle * n_e_m * laser_energy * optic_trans * w_to_lambda / ph_energy
+            self.const = self.const * 1E9  # 1E-9 from wl_step and (1E-18)^(-1) from lambda^-2
 
-        results = []
+            wl_start = self.wlStartSpinBox.value()
+            num_of_steps = int(self.WlStepsSpinBox.value())
+            wl_step = (self.wlEndSpinBox.value() - wl_start) / num_of_steps
 
+            wl_grid = [wl_start + wl_step * i for i in range(num_of_steps)]
 
-        for channel in range(self.num_of_filters):
-            ch_phel = []
+            Te_start = self.TempStartSpinBox.value()
+            Te_num_of_steps = int(self.TempStepsSpinBox.value())
+            Te_step = (self.TempEndSpinBox.value() - Te_start) / Te_num_of_steps
+
+            Te_grid = [Te_start + Te_step * i for i in range(Te_num_of_steps)]
+
+            results = []
+            sigma = []
+
             for T in Te_grid:
-                integral = 0
-                for i in range(len(wl_grid)):
-                    sigma = section_Evans(T, T, wl_grid_nm[i], laser_len, theta_scat, n_e, zeff)  # m^2/ ( st * s)
-                    integral = integral + sigma * all_ch_trans[channel][i] / (wl_grid_nm[i] ** 2)
-                ch_phel.append(integral * const * wl_step)
-            results.append(ch_phel)
+                sigma_from_T = []
+                for wl in wl_grid:
+                    sigma_from_T.append(expected_sig.section_Evans(T, T, wl, wl_laser, theta_deg, n_e_m, z_eff))
+                    self.PhEldata_label.setText('T = %f eV,\n wl = %f nm' %(T, wl))
+                    QtWidgets.QApplication.processEvents()
+                sigma.append(sigma_from_T)
+
+            for channel in range(self.num_of_filters):
+                ch_phel = []
+                for j in range(len(Te_grid)):
+                    integral = 0
+                    for i in range(len(wl_grid)):
+                        integral = integral + sigma[j][i] * self.poly_channels[channel][i] / (wl_grid[i] ** 2)
+                    ch_phel.append(integral * self.const * wl_step)
+                results.append(ch_phel)
+
+            layout = QtWidgets.QVBoxLayout()
+            pl = graphs.plot_phel(Te_grid, results)
+            toolbar = NavigationToolbar(pl, self)
+            layout.addWidget(toolbar)
+            layout.addWidget(pl)
+
+            self.widget_for_plot.setLayout(layout)
+            layout.deleteLater()
 
 
 def main():

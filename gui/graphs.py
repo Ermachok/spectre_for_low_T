@@ -18,6 +18,7 @@ def plot_orig_filters(f_data_wl: list, f_data_trans: list, filter_num: int):
     sc = MplCanvas(width=11, height=5, dpi=100)
     for i in range(filter_num):
         sc.axes.plot(f_data_wl[i], f_data_trans[i])
+
     return sc
 
 
@@ -61,3 +62,12 @@ def plot_section(wl_grid: list, section: list, laser_wl: float):
                    label='laser wl',
                    linestyle='--')
     return sc
+
+
+def plot_phel(Te_grid:list, ph_el : list):
+    sc = MplCanvas(width=10, height=4, dpi=100)
+    for i in range(len(ph_el)):
+        sc.axes.plot(Te_grid, ph_el[i])
+    sc.axes.set_xscale('log')
+    return sc
+

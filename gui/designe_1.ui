@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1162</width>
-    <height>1054</height>
+    <width>1035</width>
+    <height>1043</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -63,8 +63,8 @@ background-color: rgb(255, 243, 240);</string>
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>341</width>
-        <height>471</height>
+        <width>291</width>
+        <height>341</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
@@ -74,7 +74,7 @@ background-color: rgb(255, 243, 240);</string>
        <property name="verticalSpacing">
         <number>4</number>
        </property>
-       <item row="14" column="1">
+       <item row="16" column="1">
         <widget class="QDoubleSpinBox" name="OpticTranslabel">
          <property name="frame">
           <bool>false</bool>
@@ -105,20 +105,7 @@ background-color: rgb(255, 243, 240);</string>
          </property>
         </widget>
        </item>
-       <item row="16" column="0">
-        <spacer name="verticalSpacer_6">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="9" column="0">
+       <item row="11" column="0">
         <widget class="QLabel" name="label_2">
          <property name="text">
           <string>Theta scattering</string>
@@ -128,7 +115,7 @@ background-color: rgb(255, 243, 240);</string>
          </property>
         </widget>
        </item>
-       <item row="7" column="0">
+       <item row="9" column="0">
         <widget class="QLabel" name="label_8">
          <property name="font">
           <font>
@@ -150,7 +137,7 @@ background-color: rgb(255, 243, 240);</string>
          </property>
         </widget>
        </item>
-       <item row="8" column="0">
+       <item row="10" column="0">
         <widget class="QLabel" name="label_4">
          <property name="text">
           <string>Laser wavelength</string>
@@ -160,7 +147,7 @@ background-color: rgb(255, 243, 240);</string>
          </property>
         </widget>
        </item>
-       <item row="12" column="1">
+       <item row="14" column="1">
         <widget class="QDoubleSpinBox" name="LEnSpinBox">
          <property name="frame">
           <bool>false</bool>
@@ -191,7 +178,7 @@ background-color: rgb(255, 243, 240);</string>
          </property>
         </widget>
        </item>
-       <item row="8" column="1">
+       <item row="10" column="1">
         <widget class="QDoubleSpinBox" name="LWSpinBox">
          <property name="frame">
           <bool>false</bool>
@@ -219,7 +206,7 @@ background-color: rgb(255, 243, 240);</string>
          </property>
         </widget>
        </item>
-       <item row="12" column="0">
+       <item row="14" column="0">
         <widget class="QLabel" name="label_17">
          <property name="text">
           <string>Laser energy</string>
@@ -236,16 +223,6 @@ background-color: rgb(255, 243, 240);</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="27" column="0">
-        <widget class="QPushButton" name="CalcSecButton">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(189, 255, 250);</string>
-         </property>
-         <property name="text">
-          <string>Calculate and show section</string>
          </property>
         </widget>
        </item>
@@ -332,127 +309,6 @@ background-color: rgb(255, 243, 240);</string>
          </property>
         </widget>
        </item>
-       <item row="19" column="0">
-        <widget class="QLabel" name="label_15">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Section calculation parameters </string>
-         </property>
-         <property name="scaledContents">
-          <bool>false</bool>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <property name="indent">
-          <number>0</number>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <spacer name="verticalSpacer_5">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="20" column="0">
-        <widget class="QLabel" name="label_18">
-         <property name="text">
-          <string>start wavelength </string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="21" column="0">
-        <widget class="QLabel" name="label_20">
-         <property name="text">
-          <string>end wavelength</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="22" column="0">
-        <widget class="QLabel" name="label_21">
-         <property name="text">
-          <string>steps number</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="20" column="1">
-        <widget class="QDoubleSpinBox" name="wlStartSpinBox">
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <property name="buttonSymbols">
-          <enum>QAbstractSpinBox::NoButtons</enum>
-         </property>
-         <property name="specialValueText">
-          <string notr="true"/>
-         </property>
-         <property name="prefix">
-          <string/>
-         </property>
-         <property name="suffix">
-          <string> nm</string>
-         </property>
-         <property name="decimals">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <double>2000.000000000000000</double>
-         </property>
-         <property name="value">
-          <double>1030.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="22" column="1">
-        <widget class="QDoubleSpinBox" name="WlStepsSpinBox">
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <property name="buttonSymbols">
-          <enum>QAbstractSpinBox::NoButtons</enum>
-         </property>
-         <property name="decimals">
-          <number>0</number>
-         </property>
-         <property name="maximum">
-          <double>20000.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>10.000000000000000</double>
-         </property>
-         <property name="value">
-          <double>600.000000000000000</double>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="1">
         <widget class="QDoubleSpinBox" name="ConcSpinBox">
          <property name="sizePolicy">
@@ -490,31 +346,6 @@ background-color: rgb(255, 243, 240);</string>
          </property>
          <property name="value">
           <double>5.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="21" column="1">
-        <widget class="QDoubleSpinBox" name="wlEndSpinBox">
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <property name="buttonSymbols">
-          <enum>QAbstractSpinBox::NoButtons</enum>
-         </property>
-         <property name="suffix">
-          <string> nm </string>
-         </property>
-         <property name="decimals">
-          <number>1</number>
-         </property>
-         <property name="maximum">
-          <double>2000.000000000000000</double>
-         </property>
-         <property name="value">
-          <double>1070.000000000000000</double>
          </property>
         </widget>
        </item>
@@ -571,7 +402,7 @@ background-color: rgb(255, 243, 240);</string>
          </property>
         </widget>
        </item>
-       <item row="14" column="0">
+       <item row="16" column="0">
         <widget class="QLabel" name="label_22">
          <property name="text">
           <string>Optic transmission</string>
@@ -581,7 +412,7 @@ background-color: rgb(255, 243, 240);</string>
          </property>
         </widget>
        </item>
-       <item row="11" column="0">
+       <item row="13" column="0">
         <widget class="QLabel" name="label_16">
          <property name="text">
           <string>Solid angle, Omega</string>
@@ -591,7 +422,7 @@ background-color: rgb(255, 243, 240);</string>
          </property>
         </widget>
        </item>
-       <item row="11" column="1">
+       <item row="13" column="1">
         <widget class="QDoubleSpinBox" name="OmegaSpinBox">
          <property name="frame">
           <bool>false</bool>
@@ -619,32 +450,126 @@ background-color: rgb(255, 243, 240);</string>
          </property>
         </widget>
        </item>
-       <item row="26" column="1">
-        <widget class="QDoubleSpinBox" name="TempStepsSpinBox">
+       <item row="20" column="1">
+        <widget class="Line" name="line_4">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="20" column="0">
+        <widget class="Line" name="line">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="19" column="1">
+        <widget class="QDoubleSpinBox" name="SolpiterSpinBox">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignHCenter|Qt::AlignTop</set>
+         </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+         <property name="buttonSymbols">
+          <enum>QAbstractSpinBox::NoButtons</enum>
+         </property>
+         <property name="specialValueText">
+          <string notr="true"/>
+         </property>
+         <property name="decimals">
+          <number>3</number>
+         </property>
+         <property name="maximum">
+          <double>50.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="19" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Solpiter  parameter </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="17" column="1">
+        <widget class="Line" name="line_7">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="17" column="0">
+        <widget class="Line" name="line_6">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="18" column="0">
+        <widget class="QLabel" name="label_5">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Debay radius</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="18" column="1">
+        <widget class="QDoubleSpinBox" name="DebaySpinBox">
+         <property name="enabled">
+          <bool>true</bool>
+         </property>
          <property name="frame">
           <bool>false</bool>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::NoButtons</enum>
          </property>
+         <property name="specialValueText">
+          <string notr="true"/>
+         </property>
+         <property name="prefix">
+          <string notr="true"/>
+         </property>
+         <property name="suffix">
+          <string notr="true"> mm</string>
+         </property>
          <property name="decimals">
-          <number>0</number>
+          <number>6</number>
          </property>
          <property name="maximum">
-          <double>20000.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>10.000000000000000</double>
-         </property>
-         <property name="value">
           <double>100.000000000000000</double>
          </property>
         </widget>
        </item>
-       <item row="13" column="1">
+       <item row="15" column="1">
         <widget class="QDoubleSpinBox" name="ScatLenSpinBox">
          <property name="frame">
           <bool>false</bool>
@@ -675,7 +600,21 @@ background-color: rgb(255, 243, 240);</string>
          </property>
         </widget>
        </item>
-       <item row="13" column="0">
+       <item row="8" column="1">
+        <widget class="Line" name="line_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="8" column="0">
+        <widget class="Line" name="line_5">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="0">
         <widget class="QLabel" name="label_19">
          <property name="text">
           <string>Scattering length</string>
@@ -685,41 +624,7 @@ background-color: rgb(255, 243, 240);</string>
          </property>
         </widget>
        </item>
-       <item row="17" column="0">
-        <widget class="Line" name="line_5">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="25" column="0">
-        <widget class="QLabel" name="label_24">
-         <property name="text">
-          <string>end temperature</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="26" column="0">
-        <widget class="QLabel" name="label_25">
-         <property name="text">
-          <string>steps number</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="17" column="1">
-        <widget class="Line" name="line_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1">
+       <item row="11" column="1">
         <widget class="QDoubleSpinBox" name="ThetaSpinBox">
          <property name="frame">
           <bool>false</bool>
@@ -744,14 +649,362 @@ background-color: rgb(255, 243, 240);</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="1">
-        <widget class="Line" name="line_7">
+      </layout>
+     </widget>
+     <widget class="Line" name="line_3">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>10</y>
+        <width>20</width>
+        <height>341</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+     <widget class="QWidget" name="gridLayoutWidget_3">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>10</y>
+        <width>681</width>
+        <height>341</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="20" column="0">
+        <widget class="QPushButton" name="DetectorLoadButton">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(189, 255, 250);</string>
+         </property>
+         <property name="text">
+          <string>Load detector data</string>
+         </property>
+        </widget>
+       </item>
+       <item row="18" column="0">
+        <widget class="QLabel" name="label_13">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 217, 249)</string>
+         </property>
+         <property name="text">
+          <string>Path to detector data file: </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="0">
+        <widget class="QPushButton" name="FilterLoadpushButton">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(189, 255, 250);</string>
+         </property>
+         <property name="text">
+          <string>Load filter data</string>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="0">
+        <widget class="QPushButton" name="ShowOrigFiltersButton">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(189, 255, 250);</string>
+         </property>
+         <property name="text">
+          <string>Show original data</string>
+         </property>
+        </widget>
+       </item>
+       <item row="21" column="0">
+        <widget class="QPushButton" name="DetectorShowButton">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(189, 255, 250);</string>
+         </property>
+         <property name="text">
+          <string>Show detector data</string>
+         </property>
+        </widget>
+       </item>
+       <item row="22" column="0">
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="16" column="0">
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="label_11">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Filters data</string>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="2">
+        <widget class="QLabel" name="filter_status_label">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 94, 105);</string>
+         </property>
+         <property name="text">
+          <string>no data </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="12" column="2">
+        <widget class="QLabel" name="Filter_Origdata_label">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 94, 105);</string>
+         </property>
+         <property name="text">
+          <string>no data </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="2">
+        <widget class="QLabel" name="SpecChdata_label">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 94, 105);</string>
+         </property>
+         <property name="text">
+          <string>no data </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="23" column="2">
+        <widget class="QLabel" name="PolyData_label">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 94, 105);</string>
+         </property>
+         <property name="text">
+          <string>no data </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="21" column="2">
+        <widget class="QLabel" name="DetectorShowData_label">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 94, 105);</string>
+         </property>
+         <property name="text">
+          <string>no data </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="20" column="2">
+        <widget class="QLabel" name="Detectordata_label">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 94, 105);</string>
+         </property>
+         <property name="text">
+          <string>no data </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="18" column="2">
+        <widget class="QLineEdit" name="DetectorPathlineEdit">
+         <property name="text">
+          <string>D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected\S15995_qe.csv</string>
+         </property>
+        </widget>
+       </item>
+       <item row="25" column="2">
+        <widget class="Line" name="line_9">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
-       <item row="24" column="1">
+       <item row="25" column="0">
+        <widget class="Line" name="line_8">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="0">
+        <widget class="QPushButton" name="BuildSpecChpushButton">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(189, 255, 250);</string>
+         </property>
+         <property name="text">
+          <string>Buid and show spectral channels</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 217, 249)</string>
+         </property>
+         <property name="text">
+          <string>Path to filter data file: </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="2">
+        <widget class="QLineEdit" name="FilterlineEdit">
+         <property name="text">
+          <string>D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected\\filters16_19_doc.csv</string>
+         </property>
+        </widget>
+       </item>
+       <item row="23" column="0">
+        <widget class="QPushButton" name="PolyBuildpushButton">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(189, 255, 250);</string>
+         </property>
+         <property name="text">
+          <string>Build and show polychomator</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="widget_for_plot" native="true">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>500</y>
+        <width>991</width>
+        <height>511</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QWidget" name="gridLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>320</x>
+        <y>360</y>
+        <width>291</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_2">
+       <item row="3" column="1">
+        <widget class="QDoubleSpinBox" name="TempStepsSpinBox">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="buttonSymbols">
+          <enum>QAbstractSpinBox::NoButtons</enum>
+         </property>
+         <property name="decimals">
+          <number>0</number>
+         </property>
+         <property name="maximum">
+          <double>20000.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>10.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>100.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_26">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Temperature grid parameters </string>
+         </property>
+         <property name="scaledContents">
+          <bool>false</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="indent">
+          <number>0</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_24">
+         <property name="text">
+          <string>end temperature</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_23">
+         <property name="text">
+          <string>start temperature</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_25">
+         <property name="text">
+          <string>steps number</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
         <widget class="QDoubleSpinBox" name="TempStartSpinBox">
          <property name="frame">
           <bool>false</bool>
@@ -775,34 +1028,14 @@ background-color: rgb(255, 243, 240);</string>
           <double>20000.000000000000000</double>
          </property>
          <property name="singleStep">
-          <double>0.500000000000000</double>
+          <double>0.010000000000000</double>
          </property>
          <property name="value">
-          <double>1.000000000000000</double>
+          <double>0.200000000000000</double>
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
-        <widget class="Line" name="line_6">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="27" column="1">
-        <widget class="QLabel" name="DetectorShowData_label_2">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 94, 105);</string>
-         </property>
-         <property name="text">
-          <string>ready to calculate</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="25" column="1">
+       <item row="2" column="1">
         <widget class="QDoubleSpinBox" name="TempEndSpinBox">
          <property name="frame">
           <bool>false</bool>
@@ -830,252 +1063,7 @@ background-color: rgb(255, 243, 240);</string>
          </property>
         </widget>
        </item>
-       <item row="24" column="0">
-        <widget class="QLabel" name="label_23">
-         <property name="text">
-          <string>start temperature</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="23" column="0">
-        <widget class="Line" name="line">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="23" column="1">
-        <widget class="Line" name="line_4">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="Line" name="line_3">
-      <property name="geometry">
-       <rect>
-        <x>360</x>
-        <y>10</y>
-        <width>20</width>
-        <height>471</height>
-       </rect>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-     </widget>
-     <widget class="QWidget" name="gridLayoutWidget_3">
-      <property name="geometry">
-       <rect>
-        <x>390</x>
-        <y>10</y>
-        <width>681</width>
-        <height>471</height>
-       </rect>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_5">
        <item row="4" column="0">
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="3" column="0">
-        <widget class="QDoubleSpinBox" name="SolpiterSpinBox">
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-         </property>
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-         <property name="buttonSymbols">
-          <enum>QAbstractSpinBox::NoButtons</enum>
-         </property>
-         <property name="specialValueText">
-          <string notr="true"/>
-         </property>
-         <property name="decimals">
-          <number>3</number>
-         </property>
-         <property name="maximum">
-          <double>50.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Solpiter  parameter </string>
-         </property>
-        </widget>
-       </item>
-       <item row="17" column="0">
-        <widget class="QPushButton" name="DetectorLoadButton">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(189, 255, 250);</string>
-         </property>
-         <property name="text">
-          <string>Load detector data</string>
-         </property>
-        </widget>
-       </item>
-       <item row="17" column="1">
-        <widget class="QLabel" name="Detectordata_label">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 94, 105);</string>
-         </property>
-         <property name="text">
-          <string>no data </string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="15" column="0">
-        <widget class="QLabel" name="label_13">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 217, 249)</string>
-         </property>
-         <property name="text">
-          <string>Path to detector data file: </string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="15" column="1">
-        <widget class="QLineEdit" name="DetectorPathlineEdit">
-         <property name="text">
-          <string>D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected\S15995_qe.csv</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QPushButton" name="FilterLoadpushButton">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(189, 255, 250);</string>
-         </property>
-         <property name="text">
-          <string>Load filter data</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QLineEdit" name="FilterlineEdit">
-         <property name="text">
-          <string>D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected\\filters16_19_doc.csv</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="0">
-        <widget class="QPushButton" name="ShowOrigFiltersButton">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(189, 255, 250);</string>
-         </property>
-         <property name="text">
-          <string>Show original data</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_12">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 217, 249)</string>
-         </property>
-         <property name="text">
-          <string>Path to filter data file: </string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_11">
-         <property name="font">
-          <font>
-           <weight>75</weight>
-           <bold>true</bold>
-          </font>
-         </property>
-         <property name="text">
-          <string>Filters data</string>
-         </property>
-        </widget>
-       </item>
-       <item row="18" column="0">
-        <widget class="QPushButton" name="DetectorShowButton">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(189, 255, 250);</string>
-         </property>
-         <property name="text">
-          <string>Show detector data</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QLabel" name="filter_status_label">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 94, 105);</string>
-         </property>
-         <property name="text">
-          <string>no data </string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QLabel" name="Filter_Origdata_label">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 94, 105);</string>
-         </property>
-         <property name="text">
-          <string>no data </string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="14" column="0">
-        <spacer name="verticalSpacer_4">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="21" column="0">
         <widget class="QPushButton" name="PhElcalcpushButton">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(189, 255, 250);</string>
@@ -1085,34 +1073,33 @@ background-color: rgb(255, 243, 240);</string>
          </property>
         </widget>
        </item>
-       <item row="21" column="1">
+       <item row="4" column="1">
         <widget class="QLabel" name="PhEldata_label">
          <property name="styleSheet">
           <string notr="true">background-color: rgb(255, 94, 105);</string>
          </property>
          <property name="text">
-          <string>no data </string>
+          <string>doesn't ready</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
-       <item row="18" column="1">
-        <widget class="QLabel" name="DetectorShowData_label">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 94, 105);</string>
-         </property>
-         <property name="text">
-          <string>no data </string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="gridLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>360</y>
+        <width>281</width>
+        <height>121</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_3">
        <item row="0" column="0">
-        <widget class="QLabel" name="label_5">
+        <widget class="QLabel" name="label_15">
          <property name="font">
           <font>
            <weight>75</weight>
@@ -1120,23 +1107,129 @@ background-color: rgb(255, 243, 240);</string>
           </font>
          </property>
          <property name="text">
-          <string>Debay radius</string>
+          <string>Wavelength grid parameters </string>
+         </property>
+         <property name="scaledContents">
+          <bool>false</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="indent">
+          <number>0</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_20">
+         <property name="text">
+          <string>end wavelength</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_21">
+         <property name="text">
+          <string>steps number</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item row="1" column="0">
-        <widget class="QDoubleSpinBox" name="DebaySpinBox">
-         <property name="enabled">
-          <bool>true</bool>
+        <widget class="QLabel" name="label_18">
+         <property name="text">
+          <string>start wavelength </string>
          </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QPushButton" name="CalcSecButton">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(189, 255, 250);</string>
+         </property>
+         <property name="text">
+          <string>Calculate and show section</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QDoubleSpinBox" name="WlStepsSpinBox">
          <property name="frame">
           <bool>false</bool>
          </property>
          <property name="alignment">
-          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          <set>Qt::AlignCenter</set>
          </property>
-         <property name="readOnly">
-          <bool>true</bool>
+         <property name="buttonSymbols">
+          <enum>QAbstractSpinBox::NoButtons</enum>
+         </property>
+         <property name="decimals">
+          <number>0</number>
+         </property>
+         <property name="maximum">
+          <double>20000.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>10.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>600.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLabel" name="PhEldata_label_2">
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(255, 133, 182);</string>
+         </property>
+         <property name="text">
+          <string>waiting</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QDoubleSpinBox" name="wlEndSpinBox">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="buttonSymbols">
+          <enum>QAbstractSpinBox::NoButtons</enum>
+         </property>
+         <property name="suffix">
+          <string> nm </string>
+         </property>
+         <property name="decimals">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <double>2000.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>1070.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QDoubleSpinBox" name="wlStartSpinBox">
+         <property name="frame">
+          <bool>false</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
          <property name="buttonSymbols">
           <enum>QAbstractSpinBox::NoButtons</enum>
@@ -1145,89 +1238,23 @@ background-color: rgb(255, 243, 240);</string>
           <string notr="true"/>
          </property>
          <property name="prefix">
-          <string notr="true"/>
+          <string/>
          </property>
          <property name="suffix">
-          <string notr="true"> mm</string>
+          <string> nm</string>
          </property>
          <property name="decimals">
-          <number>6</number>
+          <number>1</number>
          </property>
          <property name="maximum">
-          <double>100.000000000000000</double>
+          <double>2000.000000000000000</double>
+         </property>
+         <property name="value">
+          <double>1030.000000000000000</double>
          </property>
         </widget>
-       </item>
-       <item row="11" column="0">
-        <widget class="QPushButton" name="BuildSpecChpushButton">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(189, 255, 250);</string>
-         </property>
-         <property name="text">
-          <string>Buid and show spectral channels</string>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="1">
-        <widget class="QLabel" name="SpecChdata_label">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 94, 105);</string>
-         </property>
-         <property name="text">
-          <string>no data </string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="20" column="1">
-        <widget class="QLabel" name="PolyData_label">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(255, 94, 105);</string>
-         </property>
-         <property name="text">
-          <string>no data </string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-        </widget>
-       </item>
-       <item row="20" column="0">
-        <widget class="QPushButton" name="PolyBuildpushButton">
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(189, 255, 250);</string>
-         </property>
-         <property name="text">
-          <string>Build and show polychomator</string>
-         </property>
-        </widget>
-       </item>
-       <item row="19" column="0">
-        <spacer name="verticalSpacer">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
        </item>
       </layout>
-     </widget>
-     <widget class="QWidget" name="widget_for_plot" native="true">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>500</y>
-        <width>1061</width>
-        <height>511</height>
-       </rect>
-      </property>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">

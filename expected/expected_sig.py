@@ -22,13 +22,12 @@ def Gamma(alpha: float, x: float) -> float:
     return gamma
 
 
-def section_Evans_v1(temp_elec_ev: float, temp_ions_ev: float, wavelen_scat_nm: float, wavelen_incident_nm: float,
-                  theta_deg: float, n_e_m: float, z_eff: float) -> float:
+def section_Evans_for_section_plot(temp_elec_ev: float, temp_ions_ev: float, wavelen_scat_nm: float, wavelen_incident_nm: float,
+                                   theta_deg: float, n_e_m: float, z_eff: float) -> float:
     #                                               !!!!!CГС!!!!
     # спектр взят с Пятницкого стр 165. (6.2) - у него из Эванса
 
-    #  отличается от section_Evans только тем, что сечение домножается на частоту, на которой ищется и открывает файл с
-    #  константами сама
+    #  отличается от section_Evans только тем, что сечение домножается на частоту, на которой ищется
     with open('D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected\constants', 'r') as file:
         all_const = json.load(file)
 
@@ -72,6 +71,8 @@ def section_Evans(temp_elec_ev: float, temp_ions_ev: float, wavelen_scat_nm: flo
                   theta_deg: float, n_e_m: float, z_eff: float) -> float:
     #                                               !!!!!CГС!!!!
     # спектр взят с Пятницкого стр 165. (6.2) - у него из Эванса
+    with open('D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected\constants', 'r') as file:
+        all_const = json.load(file)
 
     n_e_cm = n_e_m / 1E6
     wavelen_scat = wavelen_scat_nm * 1E-7  # centimeters
@@ -271,10 +272,9 @@ if __name__ == '__main__':
     #filters_data_wl, filters_data_trans, number_of_channels = load_filter_data('D:\Ioffe\\filters +0.4;+0.8/16_and_19 filters.csv')
     #filters_data_wl, filters_data_trans, number_of_channels = load_filter_data('D:\Ioffe\\filters +0.4;+0.8/16_19_measure.csv')
     #filters_data_wl, filters_data_trans, number_of_channels = load_filter_data('D:/Ioffe/divertor_thomson/annex_8/annex_8_filters.csv')
-    #filters_data_wl, filters_data_trans, number_of_channels = load_filter_data('D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected\\filters16_19_doc.csv')
-    filters_data_wl, filters_data_trans, number_of_channels = load_filter_data('D:\Ioffe\divertor_thomson\divertor_poly\\filters_4_divPoly.csv')
+    filters_data_wl, filters_data_trans, number_of_channels = load_filter_data('D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected\\filters16_19_doc.csv')
+    #filters_data_wl, filters_data_trans, number_of_channels = load_filter_data('D:\Ioffe\divertor_thomson\divertor_poly\\filters_4_divPoly.csv')
 
-    print('phuk')
     all_ch_trans = build_spec_channels(wl_grid_nm, filters_data_wl, filters_data_trans)
     build_poly(wl_grid_nm, all_ch_trans, detector_wl, detector_data)
 
