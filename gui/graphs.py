@@ -55,8 +55,8 @@ def plot_poly_data(wl_grid: list, all_ch_data: list, laser_wl: float):
 def plot_section(wl_grid: list, section_Evans: list, section_Selden: list, laser_wl: float):
 
     sc = MplCanvas(width=10, height=4, dpi=100)
-    sc.axes.set_title('Thomson scattering section at this wavelength to a given solid angle')
-    sc.axes.set_ylabel('sigma')
+    sc.axes.set_title('Thomson scattering section form factor')
+    sc.axes.set_ylabel('Spectral density')
     sc.axes.set_xlabel('wavelength, nm')
 
     #section_Evans = [x / max(section_Evans) for x in section_Evans]

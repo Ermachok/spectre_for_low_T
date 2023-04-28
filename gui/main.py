@@ -8,10 +8,10 @@ import designe_1
 
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 
-with open('D:\Ioffe\TS\divertor_thomson\different_calcuations\spectre_for_low_T\expected\constants', 'r') as file:
+with open('D:\Ioffe\TS\divertor_thomson\different_calcuations_py\spectre_for_low_T\expected\constants', 'r') as file:
     all_const = json.load(file)
 
-sys.path.insert(1,'D:\Ioffe\TS\divertor_thomson\different_calcuations\spectre_for_low_T\expected')
+sys.path.insert(1,'D:\Ioffe\TS\divertor_thomson\different_calcuations_py\spectre_for_low_T\expected')
 import expected_sig
 
 
@@ -28,7 +28,7 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
         self.TionSpinBox.valueChanged['double'].connect(self.Debay_solpet)
         self.ThetaSpinBox.valueChanged['double'].connect(self.Debay_solpet)
         self.LWSpinBox.valueChanged['double'].connect(self.Debay_solpet)
-        self.CalcSecButton.clicked.connect(self.Section_calculation)
+        self.CalcSecButton.clicked.connect(self.SpecDens_calculation)
         self.FilterLoadpushButton.clicked.connect(self.Load_filter_data)
         self.ShowOrigFiltersButton.clicked.connect(self.Show_orig_filters)
         self.BuildSpecChpushButton.clicked.connect(self.Build_Show_spec_ch)
@@ -50,7 +50,7 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
         self.poly_ind = [False, False, False]
 
         self.const = None
-        self.section = None
+        self.spec_dens_Evans = None
 
     def Debay_solpet(self):
         #  ТУТ ВСЕ ПРОВЕРЕНО, СЧИТАЕТСЯ ВЕРНО
@@ -71,15 +71,6 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
 
             omega_plasma =(4 * math.pi * n_e_cm * all_const['q_e'] ** 2 / all_const['m_e']) ** 0.5
 
-            epsilon = 1 - omega_plasma**2/omega**2
-
-            #q = 2 * omega * math.sin(theta_rad / 2) * epsilon**0.5 / all_const['c_light']
-
-            #q_ve = q * (temp_elec_ev * all_const['ev_to_erg'] / all_const['m_e'])**0.5
-            #q_vi = q * (temp_ion_ev * all_const['ev_to_erg'] / all_const['m_ion'])**0.5
-
-
-
             self.Debay.setText('{:.3e} nm / {:.3e} mm '.format(debay * 1E7, debay * 1E1)) #1E7 cm to nm
             self.SolpiterSpinBox.setValue(alpha)
 
@@ -89,12 +80,12 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
         except ZeroDivisionError:
             return 0
 
-    def Section_calculation(self):
+    def SpecDens_calculation(self):
         self.PhEldata_label_2.setStyleSheet("background-color: rgb(100, 100, 100);")
         self.PhEldata_label_2.setText("Calculating")
         QtWidgets.QApplication.processEvents()
 
-        self.section = []
+        self.spec_dens_Evans = []
 
         temp_elec_ev = self.TeSpinBox.value()
         temp_ion_ev = self.TionSpinBox.value()
@@ -122,32 +113,36 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
 
         wl_grid = [wl_start + wl_step * i for i in range(num_of_steps)]
 
-        section_Selden = []
-        electron_radius = 2.8E-15  #м^-2
+        spec_dens_Selden = []
 
         for wl in wl_grid:
-            scat_section = expected_sig.section_Evans_for_section_plot(temp_elec_ev, temp_ion_ev, wl, wl_laser, theta_deg, n_e_m, z_eff)
-            self.section.append(scat_section)
+            self.spec_dens_Evans.append(expected_sig.spec_dens_Evans_for_plot(temp_elec_ev, temp_ion_ev, wl, wl_laser, theta_deg, n_e_m, z_eff))
+            spec_dens_Selden.append(expected_sig.spect_dens_Selden(temp_elec_ev, wl, theta_deg, wl_laser))
 
-            section_Selden.append(expected_sig.section_Selden(temp_elec_ev, wl, theta_deg, wl_laser))
+        salpeter = self.SolpiterSpinBox.value()
 
-        solp = self.SolpiterSpinBox.value()
-
-        with open('C:/Users/FTI Ioffe/Desktop/section/%.4f_solp_section.csv' %solp, 'w') as file_solp:
-            row = 'wl, solp_%.4f\n nn, au' %solp
+        with open('C:/Users/FTI Ioffe/Desktop/section/%.4f_solp_section.csv' %salpeter, 'w') as file_solp:
+            row = 'wl, solp_%.4f\n nn, au' %salpeter
             file_solp.write(row + '\n')
 
-            for i in range(len(self.section)):
-                file_solp.write('{:f}, {:e}, {:e}'.format(wl_grid[i], self.section[i], section_Selden[i]) + '\n')
+            for i in range(len(self.spec_dens_Evans)):
+                file_solp.write('{:f}, {:e}, {:e}'.format(wl_grid[i], self.spec_dens_Evans[i], spec_dens_Selden[i]) + '\n')
             file_solp.close()
 
-        pl = graphs.plot_section(wl_grid, self.section, section_Selden, wl_laser)
+        pl = graphs.plot_section(wl_grid, self.spec_dens_Evans, spec_dens_Selden, wl_laser)
+
         toolbar = NavigationToolbar(pl, self)
         layout = QtWidgets.QVBoxLayout()
         layout.addWidget(toolbar)
         layout.addWidget(pl)
         self.widget_for_plot.setLayout(layout)
         layout.deleteLater()
+
+
+        alpha_1 = 1 + salpeter**2
+        self.SpecDens_theor.setValue(1/alpha_1 + z_eff * salpeter**4 /(alpha_1 * (alpha_1 + z_eff * salpeter**2 * temp_elec_ev/temp_ion_ev)))
+        self.SpecDenSel_calc.setValue(sum(spec_dens_Selden)*wl_step)
+        self.SpecDenEv_calc.setValue(sum(self.spec_dens_Evans)*wl_step)
 
         self.PhEldata_label_2.setStyleSheet("background-color: rgb(70, 200, 100);")
         self.PhEldata_label_2.setText("Ready")

@@ -2,7 +2,7 @@ import json
 import phys_const as const
 import math
 
-with open('D:\Ioffe\TS\divertor_thomson\different_calcuations\spectre_for_low_T\expected\constants', 'r') as file:
+with open('D:\Ioffe\TS\divertor_thomson\different_calcuations_py\spectre_for_low_T\expected\constants', 'r') as file:
     all_const = json.load(file)
     file.close()
 
@@ -23,8 +23,8 @@ def Gamma(alpha: float, x: float) -> float:
     return gamma
 
 
-def section_Evans_for_section_plot(temp_elec_ev: float, temp_ions_ev: float, wavelen_scat_nm: float, wavelen_incident_nm: float,
-                                   theta_deg: float, n_e_m: float, z_eff: float) -> float:
+def spec_dens_Evans_for_plot(temp_elec_ev: float, temp_ions_ev: float, wavelen_scat_nm: float, wavelen_incident_nm: float,
+                             theta_deg: float, n_e_m: float, z_eff: float) -> float:
     #                                               !!!!!CГС!!!!
     # спектр взят с Пятницкого стр 165. (6.2) - у него из Эванса
     #  отличается от section_Evans только тем, что сечение домножается на частоту, на которой ищется
@@ -58,13 +58,13 @@ def section_Evans_for_section_plot(temp_elec_ev: float, temp_ions_ev: float, wav
 
     x = Omega / omega_e
     y = Omega / omega_i
-    #ions_input_cons = (temp_elec_ev * all_const['m_ion'] / (temp_ions_ev * all_const['m_e'])) ** 0.5
+    w_to_lambda = 2 * math.pi * all_const['c_light'] * 1E-8  # /lambda in integral
 
     const = all_const['q_e'] ** 4 / (all_const['m_e'] ** 2 * all_const['c_light'] ** 4 * math.pi ** (1 / 2)) * 1E-4  # 1E-4 - to meters^2
-    #sigma = const * (Gamma(alpha, x) / omega_e + z_eff * (alpha ** 2 / (1 + alpha ** 2)) ** 2 * Gamma(beta, y) / omega_i) * omega #original
-    sigma = (Gamma(alpha, x)/omega_e  + z_eff * (alpha ** 2 / (1 + alpha ** 2)) ** 2 * Gamma(beta, y)/omega_i ) * omega
-    return sigma
+    sigma =(Gamma(alpha, x) / omega_e + z_eff * (alpha ** 2 / (1 + alpha ** 2)) ** 2 * Gamma(beta, y) / omega_i) \
+           * omega * (omega/omega_0)**2 / w_to_lambda
 
+    return sigma
 
 def section_Evans(temp_elec_ev: float, temp_ions_ev: float, wavelen_scat_nm: float, wavelen_incident_nm: float,
                   theta_deg: float, n_e_m: float, z_eff: float) -> float:
@@ -114,7 +114,7 @@ def section_Evans(temp_elec_ev: float, temp_ions_ev: float, wavelen_scat_nm: flo
 
 
 
-def section_Selden(temp: float, wl: float, theta_deg: float, lambda_0: float) -> float:
+def spect_dens_Selden(temp: float, wl: float, theta_deg: float, lambda_0: float) -> float:
     alphaT = const.m_e * const.c * const.c / (2 * const.q_e)
     theta = theta_deg * math.pi / 180.0
 
@@ -123,7 +123,7 @@ def section_Selden(temp: float, wl: float, theta_deg: float, lambda_0: float) ->
     a_loc = math.pow(1 + x, 3) * math.sqrt(2 * (1 - math.cos(theta)) * (1 + x) + math.pow(x, 2))
     b_loc = math.sqrt(1 + x * x / (2 * (1 - math.cos(theta)) * (1 + x))) - 1
     c_loc = math.sqrt(alpha / math.pi) * (1 - (15 / 16) / alpha + 345 / (512 * alpha * alpha))
-    return (c_loc / a_loc) * math.exp(-2 * alpha * b_loc)
+    return (c_loc / a_loc) * math.exp(-2 * alpha * b_loc)/lambda_0
 
 
 
