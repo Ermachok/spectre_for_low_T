@@ -5,12 +5,13 @@ from PyQt5 import QtWidgets
 import os.path
 import graphs
 import designe_1
+
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 
-with open('D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected\constants', 'r') as file:
+with open('D:\Ioffe\TS\divertor_thomson\different_calcuations\spectre_for_low_T\expected\constants', 'r') as file:
     all_const = json.load(file)
 
-sys.path.insert(1,'D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected')
+sys.path.insert(1,'D:\Ioffe\TS\divertor_thomson\different_calcuations\spectre_for_low_T\expected')
 import expected_sig
 
 
@@ -24,6 +25,7 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
 
         self.ConcSpinBox.valueChanged['double'].connect(self.Debay_solpet)
         self.TeSpinBox.valueChanged['double'].connect(self.Debay_solpet)
+        self.TionSpinBox.valueChanged['double'].connect(self.Debay_solpet)
         self.ThetaSpinBox.valueChanged['double'].connect(self.Debay_solpet)
         self.LWSpinBox.valueChanged['double'].connect(self.Debay_solpet)
         self.CalcSecButton.clicked.connect(self.Section_calculation)
@@ -33,7 +35,6 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
         self.DetectorLoadButton.clicked.connect(self.Load_detector_data)
         self.DetectorShowButton.clicked.connect(self.Show_detector_data)
         self.PolyBuildpushButton.clicked.connect(self.Build_Show_poly)
-        self.CalcSecButton.clicked.connect(self.Section_calculation)
         self.PhElcalcpushButton.clicked.connect(self.Calculate_phel)
 
         self.f_data_wl = None
@@ -52,32 +53,52 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
         self.section = None
 
     def Debay_solpet(self):
+        #  ТУТ ВСЕ ПРОВЕРЕНО, СЧИТАЕТСЯ ВЕРНО
         temp_elec_ev = self.TeSpinBox.value()
-        n_e_m = self.ConcSpinBox.value() * 1E20
+        temp_ion_ev = self.TionSpinBox.value()
+        n_e_m = self.ConcSpinBox.value() * 1E19
 
         theta_rad = self.ThetaSpinBox.value() * math.pi / 180
         n_e_cm = n_e_m * 1E-6
-        wavelen_scat = self.LWSpinBox.value() * 1E-7   #cm
+        wavelen_inc = self.LWSpinBox.value() * 1E-7   #cm
 
         try:
             debay = (temp_elec_ev * all_const['ev_to_erg'] /
                                         (4 * math.pi * n_e_cm * all_const['q_e'] ** 2)) ** (1 / 2) # cm
 
-            omega = 2 * math.pi * all_const['c_light'] / wavelen_scat  # 1/s
-            alpha = all_const['c_light'] / (2 * omega * math.sin(theta_rad / 2) * debay )
+            omega = 2 * math.pi * all_const['c_light'] / wavelen_inc  # 1/s
+            alpha = all_const['c_light'] / (2 * omega * math.sin(theta_rad / 2) * debay)
 
-            self.DebaySpinBox.setValue(debay * 1E1)  #10 - cm to mm
+            omega_plasma =(4 * math.pi * n_e_cm * all_const['q_e'] ** 2 / all_const['m_e']) ** 0.5
+
+            epsilon = 1 - omega_plasma**2/omega**2
+
+            #q = 2 * omega * math.sin(theta_rad / 2) * epsilon**0.5 / all_const['c_light']
+
+            #q_ve = q * (temp_elec_ev * all_const['ev_to_erg'] / all_const['m_e'])**0.5
+            #q_vi = q * (temp_ion_ev * all_const['ev_to_erg'] / all_const['m_ion'])**0.5
+
+
+
+            self.Debay.setText('{:.3e} nm / {:.3e} mm '.format(debay * 1E7, debay * 1E1)) #1E7 cm to nm
             self.SolpiterSpinBox.setValue(alpha)
+
+            self.PlasmaFreq_lan.setText('{:.3e}'.format(omega_plasma))
+            self.PlasmaLen_lang.setText('{:.3e}'.format(all_const['c_light'] * 1E7 * 2 * math.pi/ omega_plasma))
 
         except ZeroDivisionError:
             return 0
 
     def Section_calculation(self):
+        self.PhEldata_label_2.setStyleSheet("background-color: rgb(100, 100, 100);")
+        self.PhEldata_label_2.setText("Calculating")
+        QtWidgets.QApplication.processEvents()
+
         self.section = []
 
         temp_elec_ev = self.TeSpinBox.value()
         temp_ion_ev = self.TionSpinBox.value()
-        n_e_m = self.ConcSpinBox.value() * 1E20
+        n_e_m = self.ConcSpinBox.value() * 1E19
 
         theta_deg = self.ThetaSpinBox.value()
         solid_angle = self.OmegaSpinBox.value()
@@ -94,18 +115,33 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
         self.const = scattering_len * solid_angle * n_e_m * laser_energy * optic_trans * w_to_lambda / ph_energy
         self.const = self.const * 1E9  # 1E-9 from wl_step and (1E-18)^(-1) from lambda^-2
 
+
         wl_start = self.wlStartSpinBox.value()
         num_of_steps = int(self.WlStepsSpinBox.value())
         wl_step = (self.wlEndSpinBox.value() - wl_start) / num_of_steps
 
         wl_grid = [wl_start + wl_step * i for i in range(num_of_steps)]
 
+        section_Selden = []
+        electron_radius = 2.8E-15  #м^-2
 
         for wl in wl_grid:
             scat_section = expected_sig.section_Evans_for_section_plot(temp_elec_ev, temp_ion_ev, wl, wl_laser, theta_deg, n_e_m, z_eff)
-            self.section.append(scat_section * solid_angle)
+            self.section.append(scat_section)
 
-        pl = graphs.plot_section(wl_grid, self.section, wl_laser)
+            section_Selden.append(expected_sig.section_Selden(temp_elec_ev, wl, theta_deg, wl_laser))
+
+        solp = self.SolpiterSpinBox.value()
+
+        with open('C:/Users/FTI Ioffe/Desktop/section/%.4f_solp_section.csv' %solp, 'w') as file_solp:
+            row = 'wl, solp_%.4f\n nn, au' %solp
+            file_solp.write(row + '\n')
+
+            for i in range(len(self.section)):
+                file_solp.write('{:f}, {:e}, {:e}'.format(wl_grid[i], self.section[i], section_Selden[i]) + '\n')
+            file_solp.close()
+
+        pl = graphs.plot_section(wl_grid, self.section, section_Selden, wl_laser)
         toolbar = NavigationToolbar(pl, self)
         layout = QtWidgets.QVBoxLayout()
         layout.addWidget(toolbar)
@@ -113,8 +149,10 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
         self.widget_for_plot.setLayout(layout)
         layout.deleteLater()
 
-    def Load_filter_data(self):
+        self.PhEldata_label_2.setStyleSheet("background-color: rgb(70, 200, 100);")
+        self.PhEldata_label_2.setText("Ready")
 
+    def Load_filter_data(self):
         filter_path = self.FilterlineEdit.text()
 
         if not os.path.exists(filter_path):
@@ -288,7 +326,7 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
             self.PhEldata_label.setText('Build poly first')
             return 0
         else:
-            n_e_m = self.ConcSpinBox.value() * 1E20
+            n_e_m = self.ConcSpinBox.value() * 1E19
 
             theta_deg = self.ThetaSpinBox.value()
             solid_angle = self.OmegaSpinBox.value()

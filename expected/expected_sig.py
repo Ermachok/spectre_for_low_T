@@ -1,21 +1,22 @@
-import math
 import json
+import phys_const as const
+import math
+
+with open('D:\Ioffe\TS\divertor_thomson\different_calcuations\spectre_for_low_T\expected\constants', 'r') as file:
+    all_const = json.load(file)
+    file.close()
 
 
 def Gamma(alpha: float, x: float) -> float:
     # необходима для расчета сечения
-    t_steps_number = int(1E3)
+    t_steps_number = int(2E3)
     step_t = abs(x / t_steps_number)
-    t_grid = [0 + i * step_t for i in range(int(t_steps_number))]
-    # print(t_grid[len(t_grid)-1])
+    t_grid = [0 + i * step_t for i in range(t_steps_number)]
     exp_grid = [math.exp((t_grid[i]) ** 2 - x ** 2) for i in range(len(t_grid))]
     integral = step_t * sum(exp_grid)
-
     if x < 0:
         integral = integral * (-1)
 
-    # print('integral', integral)
-    # print('here', math.exp(-x**2))
     gamma = math.exp(-x ** 2) / ((1 - alpha ** 2 * (2 * x * integral - 1)) ** 2 +
                                  math.pi * alpha ** 4 * x ** 2 * math.exp(-2 * x ** 2))
 
@@ -26,10 +27,7 @@ def section_Evans_for_section_plot(temp_elec_ev: float, temp_ions_ev: float, wav
                                    theta_deg: float, n_e_m: float, z_eff: float) -> float:
     #                                               !!!!!CГС!!!!
     # спектр взят с Пятницкого стр 165. (6.2) - у него из Эванса
-
     #  отличается от section_Evans только тем, что сечение домножается на частоту, на которой ищется
-    with open('D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected\constants', 'r') as file:
-        all_const = json.load(file)
 
     n_e_cm = n_e_m / 1E6
     wavelen_scat = wavelen_scat_nm * 1E-7  # centimeters
@@ -51,19 +49,20 @@ def section_Evans_for_section_plot(temp_elec_ev: float, temp_ions_ev: float, wav
 
     beta_squared = z_eff * (temp_elec_ev / temp_ions_ev) * (alpha ** 2 / (1 + alpha ** 2))
 
-    beta = beta_squared ** (1 / 2)
+    beta = beta_squared ** 0.5
 
-    omega_e = 2 * omega * (2 * temp_elec_ev * all_const['ev_to_erg'] / all_const['m_e']) ** (1 / 2) * math.sin(theta_rad / 2) / all_const['c_light']
-    omega_i = 2 * omega * (2 * temp_ions_ev * all_const['ev_to_erg'] / all_const['m_ion']) ** (1 / 2) * math.sin(theta_rad / 2) / all_const['c_light']
+    omega_e = 2 * omega * (2 * temp_elec_ev * all_const['ev_to_erg'] / all_const['m_e']) ** 0.5 * math.sin(theta_rad / 2) / all_const['c_light']
+    omega_i = 2 * omega * (2 * temp_ions_ev * all_const['ev_to_erg'] / all_const['m_ion']) ** 0.5 * math.sin(theta_rad / 2) / all_const['c_light']
 
     Omega = omega - omega_0
 
     x = Omega / omega_e
     y = Omega / omega_i
+    #ions_input_cons = (temp_elec_ev * all_const['m_ion'] / (temp_ions_ev * all_const['m_e'])) ** 0.5
 
     const = all_const['q_e'] ** 4 / (all_const['m_e'] ** 2 * all_const['c_light'] ** 4 * math.pi ** (1 / 2)) * 1E-4  # 1E-4 - to meters^2
-    sigma = const * (Gamma(alpha, x) / omega_e + z_eff * (alpha ** 2 / (1 + alpha ** 2)) ** 2 * Gamma(beta,y) / omega_i) * omega
-
+    #sigma = const * (Gamma(alpha, x) / omega_e + z_eff * (alpha ** 2 / (1 + alpha ** 2)) ** 2 * Gamma(beta, y) / omega_i) * omega #original
+    sigma = (Gamma(alpha, x)/omega_e  + z_eff * (alpha ** 2 / (1 + alpha ** 2)) ** 2 * Gamma(beta, y)/omega_i ) * omega
     return sigma
 
 
@@ -71,7 +70,7 @@ def section_Evans(temp_elec_ev: float, temp_ions_ev: float, wavelen_scat_nm: flo
                   theta_deg: float, n_e_m: float, z_eff: float) -> float:
     #                                               !!!!!CГС!!!!
     # спектр взят с Пятницкого стр 165. (6.2) - у него из Эванса
-    with open('D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected\constants', 'r') as file:
+    with open('D:\Ioffe\TS\divertor_thomson\different_calcuations\spectre_for_low_T\expected\constants', 'r') as file:
         all_const = json.load(file)
 
     n_e_cm = n_e_m / 1E6
@@ -105,9 +104,27 @@ def section_Evans(temp_elec_ev: float, temp_ions_ev: float, wavelen_scat_nm: flo
     y = Omega / omega_i
 
     const = all_const['q_e'] ** 4 / (all_const['m_e'] ** 2 * all_const['c_light'] ** 4 * math.pi ** (1 / 2)) * 1E-4  #1E-4 - to meters^2
+
+
+    #ions_input_cons = (temp_elec_ev * all_const['m_ion'] / (temp_ions_ev * all_const['m_e']) )**0.5
+
     sigma = const * (Gamma(alpha, x) / omega_e + z_eff * (alpha ** 2 / (1 + alpha ** 2)) ** 2 * Gamma(beta, y) / omega_i)
 
     return sigma #m^2/ ( st * s)
+
+
+
+def section_Selden(temp: float, wl: float, theta_deg: float, lambda_0: float) -> float:
+    alphaT = const.m_e * const.c * const.c / (2 * const.q_e)
+    theta = theta_deg * math.pi / 180.0
+
+    alpha = alphaT / temp
+    x = (wl / lambda_0) - 1
+    a_loc = math.pow(1 + x, 3) * math.sqrt(2 * (1 - math.cos(theta)) * (1 + x) + math.pow(x, 2))
+    b_loc = math.sqrt(1 + x * x / (2 * (1 - math.cos(theta)) * (1 + x))) - 1
+    c_loc = math.sqrt(alpha / math.pi) * (1 - (15 / 16) / alpha + 345 / (512 * alpha * alpha))
+    return (c_loc / a_loc) * math.exp(-2 * alpha * b_loc)
+
 
 
 def load_filter_data(filter_path: str):
@@ -244,9 +261,10 @@ def build_poly(wl_grid: list, all_ch_trans: list, detector_wl: list, detector_ph
 
 
 if __name__ == '__main__':
-
-    with open('D:\Ioffe\divertor_thomson\different_calcuations\spectre_for_low_T\expected\constants', 'r') as file:
+    print('tut expected sig main')
+    with open('D:\Ioffe\TS\divertor_thomson\different_calcuations\spectre_for_low_T\expected\constants', 'r') as file:
         all_const = json.load(file)
+        file.close()
 
     laser_energy = 2  # J
     scattering_len = 17E-3  #m

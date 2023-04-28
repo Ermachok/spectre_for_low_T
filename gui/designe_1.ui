@@ -89,7 +89,7 @@ background-color: rgb(255, 243, 240);</string>
           <string notr="true"/>
          </property>
          <property name="suffix">
-          <string> </string>
+          <string/>
          </property>
          <property name="decimals">
           <number>3</number>
@@ -199,7 +199,7 @@ background-color: rgb(255, 243, 240);</string>
           <number>1</number>
          </property>
          <property name="maximum">
-          <double>2000.000000000000000</double>
+          <double>200000.000000000000000</double>
          </property>
          <property name="value">
           <double>1064.400000000000091</double>
@@ -264,10 +264,13 @@ background-color: rgb(255, 243, 240);</string>
           <string> eV</string>
          </property>
          <property name="decimals">
-          <number>2</number>
+          <number>3</number>
          </property>
          <property name="maximum">
           <double>5000.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.100000000000000</double>
          </property>
          <property name="value">
           <double>100.000000000000000</double>
@@ -336,13 +339,13 @@ background-color: rgb(255, 243, 240);</string>
           <string notr="true"/>
          </property>
          <property name="suffix">
-          <string>*E20, m^-3</string>
+          <string>*E19, m^-3</string>
          </property>
          <property name="decimals">
-          <number>1</number>
+          <number>2</number>
          </property>
          <property name="maximum">
-          <double>300.000000000000000</double>
+          <double>3000.000000000000000</double>
          </property>
          <property name="value">
           <double>5.000000000000000</double>
@@ -535,40 +538,6 @@ background-color: rgb(255, 243, 240);</string>
          </property>
         </widget>
        </item>
-       <item row="18" column="1">
-        <widget class="QDoubleSpinBox" name="DebaySpinBox">
-         <property name="enabled">
-          <bool>true</bool>
-         </property>
-         <property name="frame">
-          <bool>false</bool>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <property name="readOnly">
-          <bool>true</bool>
-         </property>
-         <property name="buttonSymbols">
-          <enum>QAbstractSpinBox::NoButtons</enum>
-         </property>
-         <property name="specialValueText">
-          <string notr="true"/>
-         </property>
-         <property name="prefix">
-          <string notr="true"/>
-         </property>
-         <property name="suffix">
-          <string notr="true"> mm</string>
-         </property>
-         <property name="decimals">
-          <number>6</number>
-         </property>
-         <property name="maximum">
-          <double>100.000000000000000</double>
-         </property>
-        </widget>
-       </item>
        <item row="15" column="1">
         <widget class="QDoubleSpinBox" name="ScatLenSpinBox">
          <property name="frame">
@@ -649,6 +618,16 @@ background-color: rgb(255, 243, 240);</string>
          </property>
         </widget>
        </item>
+       <item row="18" column="1">
+        <widget class="QLabel" name="Debay">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="Line" name="line_3">
@@ -657,7 +636,7 @@ background-color: rgb(255, 243, 240);</string>
         <x>300</x>
         <y>10</y>
         <width>20</width>
-        <height>341</height>
+        <height>471</height>
        </rect>
       </property>
       <property name="orientation">
@@ -669,7 +648,7 @@ background-color: rgb(255, 243, 240);</string>
        <rect>
         <x>320</x>
         <y>10</y>
-        <width>681</width>
+        <width>701</width>
         <height>341</height>
        </rect>
       </property>
@@ -920,7 +899,7 @@ background-color: rgb(255, 243, 240);</string>
      <widget class="QWidget" name="gridLayoutWidget">
       <property name="geometry">
        <rect>
-        <x>320</x>
+        <x>620</x>
         <y>360</y>
         <width>291</width>
         <height>121</height>
@@ -1091,7 +1070,7 @@ background-color: rgb(255, 243, 240);</string>
      <widget class="QWidget" name="gridLayoutWidget_2">
       <property name="geometry">
        <rect>
-        <x>10</x>
+        <x>320</x>
         <y>360</y>
         <width>281</width>
         <height>121</height>
@@ -1216,7 +1195,7 @@ background-color: rgb(255, 243, 240);</string>
           <number>1</number>
          </property>
          <property name="maximum">
-          <double>2000.000000000000000</double>
+          <double>2000000.000000000000000</double>
          </property>
          <property name="value">
           <double>1070.000000000000000</double>
@@ -1247,10 +1226,93 @@ background-color: rgb(255, 243, 240);</string>
           <number>1</number>
          </property>
          <property name="maximum">
-          <double>2000.000000000000000</double>
+          <double>200000.000000000000000</double>
          </property>
          <property name="value">
           <double>1030.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="gridLayoutWidget_4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>350</y>
+        <width>291</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_14">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>plasma(Langmuir)</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLabel" name="label_29">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>lambda, nm</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QLabel" name="label_27">
+         <property name="font">
+          <font>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>frequency, 1/s</string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::AutoText</enum>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QLabel" name="PlasmaFreq_lan">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLabel" name="PlasmaLen_lang">
+         <property name="text">
+          <string/>
          </property>
         </widget>
        </item>

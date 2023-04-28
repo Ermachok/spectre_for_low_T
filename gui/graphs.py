@@ -52,15 +52,25 @@ def plot_poly_data(wl_grid: list, all_ch_data: list, laser_wl: float):
     return sc
 
 
-def plot_section(wl_grid: list, section: list, laser_wl: float):
+def plot_section(wl_grid: list, section_Evans: list, section_Selden: list, laser_wl: float):
+
     sc = MplCanvas(width=10, height=4, dpi=100)
     sc.axes.set_title('Thomson scattering section at this wavelength to a given solid angle')
-    sc.axes.set_ylabel('sigma, m^2')
-    sc.axes.plot(wl_grid, section)
-    sc.axes.vlines(laser_wl, ymin=min(section), ymax=max(section),
+    sc.axes.set_ylabel('sigma')
+    sc.axes.set_xlabel('wavelength, nm')
+
+    #section_Evans = [x / max(section_Evans) for x in section_Evans]
+    #section_Selden = [x / max(section_Selden) for x in section_Selden]
+
+    sc.axes.plot(wl_grid, section_Evans, label = 'Evans')
+    sc.axes.plot(wl_grid, section_Selden, label = 'Selden')
+    sc.axes.legend()
+    sc.axes.set_xlim(min(wl_grid), max(wl_grid))
+    sc.axes.vlines(laser_wl, ymin=min(section_Evans), ymax=max(section_Evans),
                    color='r',
                    label='laser wl',
                    linestyle='--')
+
     return sc
 
 
