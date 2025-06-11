@@ -17,8 +17,10 @@ class Ui_MainWindow(object):
         MainWindow.resize(1073, 1043)
         MainWindow.setMaximumSize(QtCore.QSize(1260, 16777215))
         MainWindow.setMouseTracking(False)
-        MainWindow.setStyleSheet("background-color: rgb(255, 244, 248);\n"
-"background-color: rgb(255, 243, 240);")
+        MainWindow.setStyleSheet(
+            "background-color: rgb(255, 244, 248);\n"
+            "background-color: rgb(255, 243, 240);"
+        )
         MainWindow.setInputMethodHints(QtCore.Qt.ImhDigitsOnly)
         MainWindow.setToolButtonStyle(QtCore.Qt.ToolButtonIconOnly)
         MainWindow.setTabShape(QtWidgets.QTabWidget.Rounded)
@@ -41,7 +43,7 @@ class Ui_MainWindow(object):
         self.gridLayout.setObjectName("gridLayout")
         self.SolpiterSpinBox = QtWidgets.QDoubleSpinBox(self.formLayoutWidget)
         self.SolpiterSpinBox.setFrame(False)
-        self.SolpiterSpinBox.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
+        self.SolpiterSpinBox.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop)
         self.SolpiterSpinBox.setReadOnly(True)
         self.SolpiterSpinBox.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
         self.SolpiterSpinBox.setSpecialValueText("")
@@ -195,7 +197,9 @@ class Ui_MainWindow(object):
         self.label_10.setObjectName("label_10")
         self.gridLayout.addWidget(self.label_10, 2, 0, 1, 1)
         self.ConcSpinBox = QtWidgets.QDoubleSpinBox(self.formLayoutWidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed
+        )
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.ConcSpinBox.sizePolicy().hasHeightForWidth())
@@ -297,16 +301,22 @@ class Ui_MainWindow(object):
         self.FilterLoadpushButton.setObjectName("FilterLoadpushButton")
         self.gridLayout_5.addWidget(self.FilterLoadpushButton, 11, 0, 1, 1)
         self.ShowOrigFiltersButton = QtWidgets.QPushButton(self.gridLayoutWidget_3)
-        self.ShowOrigFiltersButton.setStyleSheet("background-color: rgb(189, 255, 250);")
+        self.ShowOrigFiltersButton.setStyleSheet(
+            "background-color: rgb(189, 255, 250);"
+        )
         self.ShowOrigFiltersButton.setObjectName("ShowOrigFiltersButton")
         self.gridLayout_5.addWidget(self.ShowOrigFiltersButton, 12, 0, 1, 1)
         self.DetectorShowButton = QtWidgets.QPushButton(self.gridLayoutWidget_3)
         self.DetectorShowButton.setStyleSheet("background-color: rgb(189, 255, 250);")
         self.DetectorShowButton.setObjectName("DetectorShowButton")
         self.gridLayout_5.addWidget(self.DetectorShowButton, 21, 0, 1, 1)
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem = QtWidgets.QSpacerItem(
+            20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
         self.gridLayout_5.addItem(spacerItem, 22, 0, 1, 1)
-        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        spacerItem1 = QtWidgets.QSpacerItem(
+            20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding
+        )
         self.gridLayout_5.addItem(spacerItem1, 16, 0, 1, 1)
         self.label_11 = QtWidgets.QLabel(self.gridLayoutWidget_3)
         font = QtGui.QFont()
@@ -336,7 +346,9 @@ class Ui_MainWindow(object):
         self.PolyData_label.setObjectName("PolyData_label")
         self.gridLayout_5.addWidget(self.PolyData_label, 23, 2, 1, 1)
         self.DetectorShowData_label = QtWidgets.QLabel(self.gridLayoutWidget_3)
-        self.DetectorShowData_label.setStyleSheet("background-color: rgb(255, 94, 105);")
+        self.DetectorShowData_label.setStyleSheet(
+            "background-color: rgb(255, 94, 105);"
+        )
         self.DetectorShowData_label.setAlignment(QtCore.Qt.AlignCenter)
         self.DetectorShowData_label.setObjectName("DetectorShowData_label")
         self.gridLayout_5.addWidget(self.DetectorShowData_label, 21, 2, 1, 1)
@@ -359,7 +371,9 @@ class Ui_MainWindow(object):
         self.line_8.setObjectName("line_8")
         self.gridLayout_5.addWidget(self.line_8, 25, 0, 1, 1)
         self.BuildSpecChpushButton = QtWidgets.QPushButton(self.gridLayoutWidget_3)
-        self.BuildSpecChpushButton.setStyleSheet("background-color: rgb(189, 255, 250);")
+        self.BuildSpecChpushButton.setStyleSheet(
+            "background-color: rgb(189, 255, 250);"
+        )
         self.BuildSpecChpushButton.setObjectName("BuildSpecChpushButton")
         self.gridLayout_5.addWidget(self.BuildSpecChpushButton, 15, 0, 1, 1)
         self.label_12 = QtWidgets.QLabel(self.gridLayoutWidget_3)
@@ -561,7 +575,7 @@ class Ui_MainWindow(object):
         self.gridLayout_6.setObjectName("gridLayout_6")
         self.SpecDenSel_calc = QtWidgets.QDoubleSpinBox(self.gridLayoutWidget_5)
         self.SpecDenSel_calc.setFrame(False)
-        self.SpecDenSel_calc.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
+        self.SpecDenSel_calc.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop)
         self.SpecDenSel_calc.setReadOnly(True)
         self.SpecDenSel_calc.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
         self.SpecDenSel_calc.setSpecialValueText("")
@@ -595,14 +609,16 @@ class Ui_MainWindow(object):
         self.gridLayout_6.addWidget(self.label_30, 0, 1, 1, 1, QtCore.Qt.AlignHCenter)
         self.SpecDens_theor = QtWidgets.QDoubleSpinBox(self.gridLayoutWidget_5)
         self.SpecDens_theor.setFrame(False)
-        self.SpecDens_theor.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
+        self.SpecDens_theor.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop)
         self.SpecDens_theor.setReadOnly(True)
         self.SpecDens_theor.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
         self.SpecDens_theor.setSpecialValueText("")
         self.SpecDens_theor.setDecimals(3)
         self.SpecDens_theor.setMaximum(50000000.0)
         self.SpecDens_theor.setObjectName("SpecDens_theor")
-        self.gridLayout_6.addWidget(self.SpecDens_theor, 1, 1, 1, 1, QtCore.Qt.AlignLeft)
+        self.gridLayout_6.addWidget(
+            self.SpecDens_theor, 1, 1, 1, 1, QtCore.Qt.AlignLeft
+        )
         self.label_32 = QtWidgets.QLabel(self.gridLayoutWidget_5)
         font = QtGui.QFont()
         font.setBold(True)
@@ -613,7 +629,7 @@ class Ui_MainWindow(object):
         self.gridLayout_6.addWidget(self.label_32, 0, 3, 1, 1)
         self.SpecDenEv_calc = QtWidgets.QDoubleSpinBox(self.gridLayoutWidget_5)
         self.SpecDenEv_calc.setFrame(False)
-        self.SpecDenEv_calc.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
+        self.SpecDenEv_calc.setAlignment(QtCore.Qt.AlignHCenter | QtCore.Qt.AlignTop)
         self.SpecDenEv_calc.setReadOnly(True)
         self.SpecDenEv_calc.setButtonSymbols(QtWidgets.QAbstractSpinBox.NoButtons)
         self.SpecDenEv_calc.setSpecialValueText("")
@@ -659,7 +675,9 @@ class Ui_MainWindow(object):
         self.DetectorLoadButton.setText(_translate("MainWindow", "Load detector data"))
         self.label_13.setText(_translate("MainWindow", "Path to detector data file: "))
         self.FilterLoadpushButton.setText(_translate("MainWindow", "Load filter data"))
-        self.ShowOrigFiltersButton.setText(_translate("MainWindow", "Show original data"))
+        self.ShowOrigFiltersButton.setText(
+            _translate("MainWindow", "Show original data")
+        )
         self.DetectorShowButton.setText(_translate("MainWindow", "Show detector data"))
         self.label_11.setText(_translate("MainWindow", "Filters data"))
         self.filter_status_label.setText(_translate("MainWindow", "no data "))
@@ -668,24 +686,42 @@ class Ui_MainWindow(object):
         self.PolyData_label.setText(_translate("MainWindow", "no data "))
         self.DetectorShowData_label.setText(_translate("MainWindow", "no data "))
         self.Detectordata_label.setText(_translate("MainWindow", "no data "))
-        self.DetectorPathlineEdit.setText(_translate("MainWindow", "D:\Ioffe\TS\divertor_thomson\different_calcuations_py\spectre_for_low_T\expected\\S15995_qe.csv"))
-        self.BuildSpecChpushButton.setText(_translate("MainWindow", "Buid and show spectral channels"))
+        self.DetectorPathlineEdit.setText(
+            _translate(
+                "MainWindow",
+                "D:\Ioffe\TS\divertor_thomson\different_calcuations_py\spectre_for_low_T\expected\\S15995_qe.csv",
+            )
+        )
+        self.BuildSpecChpushButton.setText(
+            _translate("MainWindow", "Buid and show spectral channels")
+        )
         self.label_12.setText(_translate("MainWindow", "Path to filter data file: "))
-        self.FilterlineEdit.setText(_translate("MainWindow", "D:\Ioffe\TS\divertor_thomson\different_calcuations_py\spectre_for_low_T\expected\\\\filters16_19_doc.csv"))
-        self.PolyBuildpushButton.setText(_translate("MainWindow", "Build and show polychomator"))
+        self.FilterlineEdit.setText(
+            _translate(
+                "MainWindow",
+                "D:\Ioffe\TS\divertor_thomson\different_calcuations_py\spectre_for_low_T\expected\\\\filters16_19_doc.csv",
+            )
+        )
+        self.PolyBuildpushButton.setText(
+            _translate("MainWindow", "Build and show polychomator")
+        )
         self.label_26.setText(_translate("MainWindow", "Temperature grid parameters "))
         self.label_24.setText(_translate("MainWindow", "end temperature"))
         self.label_23.setText(_translate("MainWindow", "start temperature"))
         self.label_25.setText(_translate("MainWindow", "steps number"))
         self.TempStartSpinBox.setSuffix(_translate("MainWindow", "  eV"))
         self.TempEndSpinBox.setSuffix(_translate("MainWindow", " eV"))
-        self.PhElcalcpushButton.setText(_translate("MainWindow", "Calculate and show photoelectrons"))
-        self.PhEldata_label.setText(_translate("MainWindow", "doesn\'t ready"))
+        self.PhElcalcpushButton.setText(
+            _translate("MainWindow", "Calculate and show photoelectrons")
+        )
+        self.PhEldata_label.setText(_translate("MainWindow", "doesn't ready"))
         self.label_15.setText(_translate("MainWindow", "Wavelength grid parameters "))
         self.label_20.setText(_translate("MainWindow", "end wavelength"))
         self.label_21.setText(_translate("MainWindow", "steps number"))
         self.label_18.setText(_translate("MainWindow", "start wavelength "))
-        self.CalcSecButton.setText(_translate("MainWindow", "Calculate and show section"))
+        self.CalcSecButton.setText(
+            _translate("MainWindow", "Calculate and show section")
+        )
         self.PhEldata_label_2.setText(_translate("MainWindow", "waiting"))
         self.wlEndSpinBox.setSuffix(_translate("MainWindow", " nm "))
         self.wlStartSpinBox.setSuffix(_translate("MainWindow", " nm"))
@@ -696,5 +732,10 @@ class Ui_MainWindow(object):
         self.label_31.setText(_translate("MainWindow", "Calc.Sel"))
         self.label_30.setText(_translate("MainWindow", "Theor_Ev"))
         self.label_32.setText(_translate("MainWindow", "Calc.Ev"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Section calculation"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Tab 2"))
+        self.tabWidget.setTabText(
+            self.tabWidget.indexOf(self.tab),
+            _translate("MainWindow", "Section calculation"),
+        )
+        self.tabWidget.setTabText(
+            self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Tab 2")
+        )
