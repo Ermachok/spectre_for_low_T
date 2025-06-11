@@ -8,3 +8,4 @@
 
 Скриншот интерфейса:
 
+![example](https://github.com/Ermachok/spectre_for_low_T/blob/master/pictures/img.png)
