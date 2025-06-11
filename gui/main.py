@@ -11,7 +11,7 @@ from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as Navigatio
 with open('D:\Ioffe\TS\divertor_thomson\different_calcuations_py\spectre_for_low_T\expected\constants', 'r') as file:
     all_const = json.load(file)
 
-sys.path.insert(1,'D:\Ioffe\TS\divertor_thomson\different_calcuations_py\spectre_for_low_T\expected')
+sys.path.insert(1, 'D:\Ioffe\TS\divertor_thomson\different_calcuations_py\spectre_for_low_T\expected')
 import expected_sig
 
 
@@ -75,7 +75,7 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
             self.SolpiterSpinBox.setValue(alpha)
 
             self.PlasmaFreq_lan.setText('{:.3e}'.format(omega_plasma))
-            self.PlasmaLen_lang.setText('{:.3e}'.format(all_const['c_light'] * 1E7 * 2 * math.pi/ omega_plasma))
+            self.PlasmaLen_lang.setText('{:.3e}'.format(all_const['c_light'] * 1E7 * 2 * math.pi / omega_plasma))
 
         except ZeroDivisionError:
             return 0
@@ -121,13 +121,6 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
 
         salpeter = self.SolpiterSpinBox.value()
 
-        with open('C:/Users/FTI Ioffe/Desktop/section/%.4f_solp_section.csv' %salpeter, 'w') as file_solp:
-            row = 'wl, solp_%.4f\n nn, au' %salpeter
-            file_solp.write(row + '\n')
-
-            for i in range(len(self.spec_dens_Evans)):
-                file_solp.write('{:f}, {:e}, {:e}'.format(wl_grid[i], self.spec_dens_Evans[i], spec_dens_Selden[i]) + '\n')
-            file_solp.close()
 
         pl = graphs.plot_section(wl_grid, self.spec_dens_Evans, spec_dens_Selden, wl_laser)
 
@@ -287,12 +280,12 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
             layout.deleteLater()
 
     def Build_Show_poly(self):
+
         if self.spec_ch_data is None or self.detector_data is None:
             self.PolyData_label.setText('Build spectral channels and load detector data first')
             return 0
         else:
             wl_laser = self.LWSpinBox.value()
-
             wl_start = self.wlStartSpinBox.value()
             num_of_steps = int(self.WlStepsSpinBox.value())
             wl_step = (self.wlEndSpinBox.value() - wl_start) / num_of_steps
@@ -375,6 +368,9 @@ class App(QtWidgets.QMainWindow, designe_1.Ui_MainWindow):
             toolbar = NavigationToolbar(pl, self)
             layout.addWidget(toolbar)
             layout.addWidget(pl)
+
+            for i in range(len(Te_grid)):
+                print(Te_grid[i], results[0][i], results[1][i])
 
             self.widget_for_plot.setLayout(layout)
             layout.deleteLater()
